@@ -13,6 +13,8 @@ import { ethers } from "ethers";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
 import { SnapDB } from "./snapdb";
 
+const WALLET_ADDRESS = "0x8287F2C0613792884f287b0175290b8b4C4D9C3f";
+
 /**
  * Get a message from the origin. For demonstration purposes only.
  *
@@ -54,14 +56,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const notesManager = new LocalNotesManager(
     db,
     signer,
-    "0x8287F2C0613792884f287b0175290b8b4C4D9C3f",
+    WALLET_ADDRESS,
     new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/")
   );
   const context = new NocturneContext(
     signer,
     new MockSpend2Prover(),
     await LocalMerkleProver.fromDb(
-      "0x8287F2C0613792884f287b0175290b8b4C4D9C3f",
+      WALLET_ADDRESS,
       new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/"),
       db
     ),
@@ -123,6 +125,22 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       const operationRequest = operationRequestFromJSON(
         request.params.operationRequest
       );
+
+      // Ensure user has minimum balance for request
+      await context.ensureMinimumForOperationRequest(operationRequest);
+
+      // Confirm spend sig auth
+      await wallet.request({
+        method: "snap_confirm",
+        params: [
+          {
+            prompt: `Confirm Spend Authorization`,
+            description: `${origin}`,
+            textAreaContent: toJSON(operationRequest.assetRequests),
+          },
+        ],
+      });
+
       const preProofOperationInputs =
         await context.tryGetPreProofSpendTxInputsAndProofInputs(
           operationRequest

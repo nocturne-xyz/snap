@@ -31,7 +31,7 @@
     "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "1.0.1-alpha",
+    "@nocturne-xyz/sdk": "^1.0.2-alpha",
     "ethers": "^5.7.2"
   },
   "devDependencies": {
