@@ -54,14 +54,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const notesManager = new LocalNotesManager(
     db,
     signer,
-    "0xe9F3F81A41B4a777658661d85a74e21576d92E53",
+    "0x8287F2C0613792884f287b0175290b8b4C4D9C3f",
     new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/")
   );
   const context = new NocturneContext(
     signer,
     new MockSpend2Prover(),
     await LocalMerkleProver.fromDb(
-      "0xe9F3F81A41B4a777658661d85a74e21576d92E53",
+      "0x8287F2C0613792884f287b0175290b8b4C4D9C3f",
       new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/"),
       db
     ),
@@ -118,7 +118,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         JSON.stringify(await db.getSerializableState())
       );
       return;
-    case "nocturne_generateProof":
+    case "nocturne_getSpendInputs":
       console.log("Request params: ", request.params);
       const operationRequest = operationRequestFromJSON(
         request.params.operationRequest

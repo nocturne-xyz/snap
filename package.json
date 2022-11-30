@@ -28,7 +28,7 @@
     "test:unit": ""
   },
   "resolutions": {
-    "ffjavascript": "nocturne-xyz/ffjavascript#3bfd14daf3f0b22cdaddc17a39bf10d6ee79716f"
+    "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
     "@nocturne-xyz/sdk": "1.0.1-alpha",

@@ -3807,13 +3807,13 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-ffjavascript@0.2.57, ffjavascript@^0.2.38, ffjavascript@nocturne-xyz/ffjavascript#3bfd14daf3f0b22cdaddc17a39bf10d6ee79716f:
+ffjavascript@0.2.57, ffjavascript@^0.2.38, ffjavascript@nocturne-xyz/ffjavascript:
   version "0.2.57"
-  resolved "https://codeload.github.com/nocturne-xyz/ffjavascript/tar.gz/3bfd14daf3f0b22cdaddc17a39bf10d6ee79716f"
+  resolved "https://codeload.github.com/nocturne-xyz/ffjavascript/tar.gz/d524c73d21eefbf9a222c78847953a2a240a626e"
   dependencies:
     wasmbuilder "0.0.16"
     wasmcurves "0.2.0"
-    web-worker FLAXPrivacy/web-worker#master
+    web-worker nocturne-xyz/web-worker
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
@@ -6855,9 +6855,9 @@ wasmcurves@0.2.0:
   dependencies:
     wasmbuilder "0.0.16"
 
-web-worker@FLAXPrivacy/web-worker#master:
+web-worker@nocturne-xyz/web-worker:
   version "1.2.0"
-  resolved "https://codeload.github.com/FLAXPrivacy/web-worker/tar.gz/e3135df13d2ab8c32640e596ceae6a9a83d8efa6"
+  resolved "https://codeload.github.com/nocturne-xyz/web-worker/tar.gz/e3135df13d2ab8c32640e596ceae6a9a83d8efa6"
 
 web3-bzz@1.8.1:
   version "1.8.1"
