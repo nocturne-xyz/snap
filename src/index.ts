@@ -2,12 +2,13 @@ import {
   NocturneContext,
   NocturnePrivKey,
   NocturneSigner,
-  IncludedNoteStruct,
+  IncludedNote,
   LocalMerkleProver,
   LocalNotesManager,
-  MockSpend2Prover,
+  MockJoinSplitProver,
   operationRequestFromJSON,
   toJSON,
+  rerandNocturneAddress,
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
@@ -44,8 +45,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const signer = new NocturneSigner(nocturnePrivKey);
   const nocturneAddr = signer.address;
   // Old note input to spend
-  const oldNote: IncludedNoteStruct = {
-    owner: nocturneAddr.toStruct(),
+  const oldNote: IncludedNote = {
+    owner: nocturneAddr,
     nonce: 1n,
     asset: "0aaaa",
     value: 100n,
@@ -61,7 +62,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   );
   const context = new NocturneContext(
     signer,
-    new MockSpend2Prover(),
+    new MockJoinSplitProver(),
     await LocalMerkleProver.fromDb(
       WALLET_ADDRESS,
       new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/"),
@@ -106,6 +107,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           },
         ],
       });
+    case "nocturne_getRandomizedAddr":
+      return toJSON(rerandNocturneAddress(context.signer.address));
     case "nocturne_syncNotes":
       await context.syncNotes();
       console.log(
@@ -120,7 +123,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         JSON.stringify(await db.getSerializableState())
       );
       return;
-    case "nocturne_getSpendInputs":
+    case "nocturne_getJoinSplitInputs":
       console.log("Request params: ", request.params);
       const operationRequest = operationRequestFromJSON(
         request.params.operationRequest
@@ -141,10 +144,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         ],
       });
 
-      const preProofOperationInputs =
-        await context.tryGetPreProofSpendTxInputsAndProofInputs(
-          operationRequest
-        );
+      const preProofOperationInputs = await context.tryGetPreProofOperation(
+        operationRequest
+      );
       console.log(
         "PreProofOperationInputsAndProofInputs: ",
         toJSON(preProofOperationInputs)
