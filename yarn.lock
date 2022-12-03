@@ -1567,10 +1567,10 @@
     "@openzeppelin/contracts" "4.7.3"
     "@openzeppelin/contracts-upgradeable" "4.7.3"
 
-"@nocturne-xyz/sdk@^1.0.4-alpha":
-  version "1.0.4-alpha"
-  resolved "https://registry.yarnpkg.com/@nocturne-xyz/sdk/-/sdk-1.0.4-alpha.tgz#e9da9ae580a7d2f68161dc20afe8f07eb17f1a21"
-  integrity sha512-fPI6C4juM5Z8ehVDggStxCGyMqKSZS6VCYb0zURVZfWuitWCgasbP+UeEjZJWCNCs57jPvQVi+8kfUHz8s0j8w==
+"@nocturne-xyz/sdk@^1.0.7-alpha":
+  version "1.0.7-alpha"
+  resolved "https://registry.yarnpkg.com/@nocturne-xyz/sdk/-/sdk-1.0.7-alpha.tgz#93b37cfbcb91e7e3451f486936abe33800bb3247"
+  integrity sha512-mHbgzFXz96WQrUalJe5FOqw1kKnaW1aa4ELtdIlZi0UUlHpa6glfpQeXPJ6y7jMHmbRrpo4YqXeBfCrg61DZTQ==
   dependencies:
     "@nocturne-xyz/contracts" "^1.0.2-alpha"
     "@types/json-bigint" "^1.0.1"
@@ -2593,9 +2593,9 @@ camelcase@^6.0.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001400:
-  version "1.0.30001435"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001435.tgz#502c93dbd2f493bee73a408fe98e98fb1dad10b2"
-  integrity sha512-kdCkUTjR+v4YAJelyiDTqiu82BDr4W4CP5sgTA0ZBmqn30XfS2ZghPLMowik9TPhS+psWJiUNxsqLyurDbmutA==
+  version "1.0.30001436"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001436.tgz#22d7cbdbbbb60cdc4ca1030ccd6dea9f5de4848b"
+  integrity sha512-ZmWkKsnC2ifEPoWUvSAIGyOYwT+keAaaWPHiQ9DfMqS1t6tfuyFYoWR78TeZtznkEQ64+vGXH9cZrElwR2Mrxg==
 
 caseless@~0.12.0:
   version "0.12.0"

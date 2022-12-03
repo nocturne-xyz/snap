@@ -110,6 +110,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       });
     case "nocturne_getRandomizedAddr":
       return toJSON(rerandNocturneAddress(context.signer.address));
+    case "nocturne_getAllBalances":
+      return toJSON(await context.getAllAssetBalances());
     case "nocturne_syncNotes":
       await context.syncNotes();
       console.log(
