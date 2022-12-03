@@ -14,7 +14,8 @@ import { ethers } from "ethers";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
 import { SnapDB } from "./snapdb";
 
-const WALLET_ADDRESS = "0x8287F2C0613792884f287b0175290b8b4C4D9C3f";
+const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
+const WALLET_ADDRESS = "0xbA6606776913Ae93A8CaD1B819Ecf3C89D9E4e43";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -58,14 +59,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     db,
     signer,
     WALLET_ADDRESS,
-    new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/")
+    new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL)
   );
   const context = new NocturneContext(
     signer,
     new MockJoinSplitProver(),
     await LocalMerkleProver.fromDb(
       WALLET_ADDRESS,
-      new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/"),
+      new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL),
       db
     ),
     notesManager,
