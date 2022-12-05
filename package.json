@@ -23,15 +23,17 @@
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
+    "prettier:check": "prettier --check ./src",
+    "prettier:write": "prettier --write ./src",
     "serve": "mm-snap serve",
     "start": "mm-snap watch",
     "test:unit": ""
   },
   "resolutions": {
-    "ffjavascript": "nocturne-xyz/ffjavascript#3bfd14daf3f0b22cdaddc17a39bf10d6ee79716f"
+    "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "1.0.1-alpha",
+    "@nocturne-xyz/sdk": "^1.0.8-alpha",
     "ethers": "^5.7.2"
   },
   "devDependencies": {

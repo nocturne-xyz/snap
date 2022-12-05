@@ -2,16 +2,20 @@ import {
   NocturneContext,
   NocturnePrivKey,
   NocturneSigner,
-  IncludedNoteStruct,
+  IncludedNote,
   LocalMerkleProver,
   LocalNotesManager,
-  MockSpend2Prover,
+  MockJoinSplitProver,
   operationRequestFromJSON,
   toJSON,
+  rerandNocturneAddress,
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
 import { SnapDB } from "./snapdb";
+
+const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
+const WALLET_ADDRESS = "0xbA6606776913Ae93A8CaD1B819Ecf3C89D9E4e43";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -42,8 +46,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const signer = new NocturneSigner(nocturnePrivKey);
   const nocturneAddr = signer.address;
   // Old note input to spend
-  const oldNote: IncludedNoteStruct = {
-    owner: nocturneAddr.toStruct(),
+  const oldNote: IncludedNote = {
+    owner: nocturneAddr,
     nonce: 1n,
     asset: "0aaaa",
     value: 100n,
@@ -54,15 +58,15 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const notesManager = new LocalNotesManager(
     db,
     signer,
-    "0xe9F3F81A41B4a777658661d85a74e21576d92E53",
-    new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/")
+    WALLET_ADDRESS,
+    new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL)
   );
   const context = new NocturneContext(
     signer,
-    new MockSpend2Prover(),
+    new MockJoinSplitProver(),
     await LocalMerkleProver.fromDb(
-      "0xe9F3F81A41B4a777658661d85a74e21576d92E53",
-      new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/"),
+      WALLET_ADDRESS,
+      new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL),
       db
     ),
     notesManager,
@@ -104,6 +108,10 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           },
         ],
       });
+    case "nocturne_getRandomizedAddr":
+      return toJSON(rerandNocturneAddress(context.signer.address));
+    case "nocturne_getAllBalances":
+      return toJSON(await context.getAllAssetBalances());
     case "nocturne_syncNotes":
       await context.syncNotes();
       console.log(
@@ -118,15 +126,30 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         JSON.stringify(await db.getSerializableState())
       );
       return;
-    case "nocturne_generateProof":
+    case "nocturne_getJoinSplitInputs":
       console.log("Request params: ", request.params);
       const operationRequest = operationRequestFromJSON(
         request.params.operationRequest
       );
-      const preProofOperationInputs =
-        await context.tryGetPreProofSpendTxInputsAndProofInputs(
-          operationRequest
-        );
+
+      // Ensure user has minimum balance for request
+      await context.ensureMinimumForOperationRequest(operationRequest);
+
+      // Confirm spend sig auth
+      await wallet.request({
+        method: "snap_confirm",
+        params: [
+          {
+            prompt: `Confirm Spend Authorization`,
+            description: `${origin}`,
+            textAreaContent: toJSON(operationRequest.assetRequests),
+          },
+        ],
+      });
+
+      const preProofOperationInputs = await context.tryGetPreProofOperation(
+        operationRequest
+      );
       console.log(
         "PreProofOperationInputsAndProofInputs: ",
         toJSON(preProofOperationInputs)
