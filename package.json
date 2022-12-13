@@ -30,10 +30,12 @@
     "test:unit": ""
   },
   "resolutions": {
+    "bigint-json": "nocturne-xyz/bigint-json",
     "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "^1.0.8-alpha",
+    "@nocturne-xyz/sdk": "^1.0.10-alpha",
+    "bigint-json-serialization": "^1.0.1",
     "ethers": "^5.7.2"
   },
   "devDependencies": {

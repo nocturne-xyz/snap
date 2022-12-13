@@ -6,16 +6,16 @@ import {
   LocalMerkleProver,
   LocalNotesManager,
   MockJoinSplitProver,
-  operationRequestFromJSON,
-  toJSON,
-  rerandNocturneAddress,
+  NocturneAddressTrait,
+  OperationRequest,
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
 import { SnapDB } from "./snapdb";
+import * as JSON from "bigint-json-serialization";
 
 const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
-const WALLET_ADDRESS = "0xbA6606776913Ae93A8CaD1B819Ecf3C89D9E4e43";
+const WALLET_ADDRESS = "0xFf3eeb78248f4E3E3715aeF132771Cd8DD6120Af";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -109,9 +109,11 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         ],
       });
     case "nocturne_getRandomizedAddr":
-      return toJSON(rerandNocturneAddress(context.signer.address));
+      return JSON.stringify(
+        NocturneAddressTrait.randomize(context.signer.address)
+      );
     case "nocturne_getAllBalances":
-      return toJSON(await context.getAllAssetBalances());
+      return JSON.stringify(await context.getAllAssetBalances());
     case "nocturne_syncNotes":
       await context.syncNotes();
       console.log(
@@ -128,9 +130,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       return;
     case "nocturne_getJoinSplitInputs":
       console.log("Request params: ", request.params);
-      const operationRequest = operationRequestFromJSON(
+      const operationRequest = JSON.parse(
         request.params.operationRequest
-      );
+      ) as OperationRequest;
 
       // Ensure user has minimum balance for request
       await context.ensureMinimumForOperationRequest(operationRequest);
@@ -142,7 +144,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           {
             prompt: `Confirm Spend Authorization`,
             description: `${origin}`,
-            textAreaContent: toJSON(operationRequest.assetRequests),
+            textAreaContent: JSON.stringify(operationRequest.assetRequests),
           },
         ],
       });
@@ -152,9 +154,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       );
       console.log(
         "PreProofOperationInputsAndProofInputs: ",
-        toJSON(preProofOperationInputs)
+        JSON.stringify(preProofOperationInputs)
       );
-      return toJSON(preProofOperationInputs);
+      return JSON.stringify(preProofOperationInputs);
     case "nocturne_clearDb":
       await context.db.clear();
       console.log(
