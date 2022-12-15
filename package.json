@@ -30,7 +30,6 @@
     "test:unit": ""
   },
   "resolutions": {
-    "bigint-json": "nocturne-xyz/bigint-json",
     "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
