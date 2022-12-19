@@ -144,7 +144,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           {
             prompt: `Confirm Spend Authorization`,
             description: `${origin}`,
-            textAreaContent: JSON.stringify(operationRequest.assetRequests),
+            textAreaContent: JSON.stringify(operationRequest.joinSplitRequests),
           },
         ],
       });

@@ -33,7 +33,7 @@
     "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "^1.0.10-alpha",
+    "@nocturne-xyz/sdk": "^1.0.11-alpha",
     "bigint-json-serialization": "^1.0.1",
     "ethers": "^5.7.2"
   },
