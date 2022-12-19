@@ -42,7 +42,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   request,
 }) => {
   const db = new SnapDB();
-  const nocturnePrivKey = new NocturnePrivKey(1n);
+  const nocturnePrivKey = new NocturnePrivKey(3n);
   const signer = new NocturneSigner(nocturnePrivKey);
   const nocturneAddr = signer.address;
   // Old note input to spend
