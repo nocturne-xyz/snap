@@ -8,10 +8,12 @@ import {
   MockJoinSplitProver,
   NocturneAddressTrait,
   OperationRequest,
+  NotesDB,
+  MerkleDB,
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
-import { SnapDB } from "./snapdb";
+import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
 
 const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
@@ -41,7 +43,10 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   origin,
   request,
 }) => {
-  const db = new SnapDB();
+  const kvStore = new SnapKvStore();
+  const notesDB = new NotesDB(kvStore);
+  const merkleDB = new MerkleDB(kvStore);
+
   const nocturnePrivKey = new NocturnePrivKey(3n);
   const signer = new NocturneSigner(nocturnePrivKey);
   const nocturneAddr = signer.address;
@@ -56,7 +61,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   };
 
   const notesManager = new LocalNotesManager(
-    db,
+    notesDB,
     signer,
     WALLET_ADDRESS,
     new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL)
@@ -67,10 +72,10 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     await LocalMerkleProver.fromDb(
       WALLET_ADDRESS,
       new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL),
-      db
+      merkleDB
     ),
     notesManager,
-    db
+    notesDB
   );
 
   console.log("Switching on method: ", request.method);
@@ -88,26 +93,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           },
         ],
       });
-    case "setAndShowKv":
-      await context.db.storeNote(oldNote);
-      return wallet.request({
-        method: "snap_confirm",
-        params: [
-          {
-            prompt: getMessage(origin),
-            description: `Displaying newly set storage for ${{
-              address: oldNote.asset,
-              id: oldNote.id,
-            }}`,
-            textAreaContent: (
-              await db.getNotesFor({
-                address: oldNote.asset,
-                id: oldNote.id,
-              })
-            )[0].asset,
-          },
-        ],
-      });
     case "nocturne_getRandomizedAddr":
       return JSON.stringify(
         NocturneAddressTrait.randomize(context.signer.address)
@@ -118,14 +103,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       await context.syncNotes();
       console.log(
         "Synced notes, state: ",
-        JSON.stringify(await db.getSerializableState())
+        JSON.stringify(await kvStore.getState())
       );
       return;
     case "nocturne_syncLeaves":
       await context.syncLeaves();
       console.log(
         "Synced leaves, state: ",
-        JSON.stringify(await db.getSerializableState())
+        JSON.stringify(await kvStore.getState())
       );
       return;
     case "nocturne_getJoinSplitInputs":
@@ -157,13 +142,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         JSON.stringify(preProofOperationInputs)
       );
       return JSON.stringify(preProofOperationInputs);
-    case "nocturne_clearDb":
-      await context.db.clear();
-      console.log(
-        "Cleared DB, state: ",
-        JSON.stringify(await db.getSerializableState())
-      );
-      return;
     default:
       throw new Error("Method not found.");
   }
