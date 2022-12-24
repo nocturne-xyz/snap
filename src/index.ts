@@ -49,16 +49,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
   const nocturnePrivKey = new NocturnePrivKey(3n);
   const signer = new NocturneSigner(nocturnePrivKey);
-  const nocturneAddr = signer.address;
-  // Old note input to spend
-  const oldNote: IncludedNote = {
-    owner: nocturneAddr,
-    nonce: 1n,
-    asset: "0aaaa",
-    value: 100n,
-    id: 5n,
-    merkleIndex: 0,
-  };
 
   const notesManager = new LocalNotesManager(
     notesDB,
@@ -142,6 +132,13 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         JSON.stringify(preProofOperationInputs)
       );
       return JSON.stringify(preProofOperationInputs);
+    case "nocturne_clearDb":
+      await kvStore.clear();
+      console.log(
+        "Cleared DB, state: ",
+        JSON.stringify(await kvStore.getState())
+      );
+      return;
     default:
       throw new Error("Method not found.");
   }
