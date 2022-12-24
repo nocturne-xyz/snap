@@ -2,7 +2,6 @@ import {
   NocturneContext,
   NocturnePrivKey,
   NocturneSigner,
-  IncludedNote,
   LocalMerkleProver,
   LocalNotesManager,
   MockJoinSplitProver,
