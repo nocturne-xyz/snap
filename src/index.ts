@@ -65,6 +65,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const merkleDB = new MerkleDB(kvStore);
 
   const nocturnePrivKey = await getNocturnePrivKeyFromBIP44();
+  console.log("Snap Nocturne Canonical Address: ", nocturnePrivKey.toCanonAddress());
+  console.log("Snap Nocturne Address: ", nocturnePrivKey.toAddress());
+
   const signer = new NocturneSigner(nocturnePrivKey);
 
   const notesManager = new LocalNotesManager(
