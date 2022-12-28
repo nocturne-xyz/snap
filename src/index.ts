@@ -9,14 +9,16 @@ import {
   OperationRequest,
   NotesDB,
   MerkleDB,
+  SNARK_SCALAR_FIELD,
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
+import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
 import { OnRpcRequestHandler } from "@metamask/snap-types";
 import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
 
 const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
-const WALLET_ADDRESS = "0xFf3eeb78248f4E3E3715aeF132771Cd8DD6120Af";
+const WALLET_ADDRESS = "0xE706317bf66b1C741CfCa5dCf5B78A44B5eD79e0";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -26,6 +28,22 @@ const WALLET_ADDRESS = "0xFf3eeb78248f4E3E3715aeF132771Cd8DD6120Af";
  */
 export const getMessage = (originString: string): string =>
   `Hello, ${originString}!`;
+
+export const NOCTURNE_BIP44_COINTYPE = 6789;
+
+async function getNocturnePrivKeyFromBIP44(): Promise<NocturnePrivKey> {
+  const nocturneNode = await wallet.request({
+    method: "snap_getBip44Entropy",
+    params: {
+      coinType: NOCTURNE_BIP44_COINTYPE,
+    },
+  });
+  const addressKeyDeriver = await getBIP44AddressKeyDeriver(nocturneNode);
+  const keyNode = await addressKeyDeriver(0);
+  const sk = BigInt(keyNode.privateKey) % SNARK_SCALAR_FIELD;
+  const nocturnePrivKey = new NocturnePrivKey(sk);
+  return nocturnePrivKey;
+}
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -46,7 +64,13 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const notesDB = new NotesDB(kvStore);
   const merkleDB = new MerkleDB(kvStore);
 
-  const nocturnePrivKey = new NocturnePrivKey(3n);
+  const nocturnePrivKey = await getNocturnePrivKeyFromBIP44();
+  console.log(
+    "Snap Nocturne Canonical Address: ",
+    nocturnePrivKey.toCanonAddress()
+  );
+  console.log("Snap Nocturne Address: ", nocturnePrivKey.toAddress());
+
   const signer = new NocturneSigner(nocturnePrivKey);
 
   const notesManager = new LocalNotesManager(
