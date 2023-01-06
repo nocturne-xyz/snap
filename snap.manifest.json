@@ -21,7 +21,12 @@
     "snap_confirm": {},
     "endowment:network-access": {},
     "endowment:long-running": {},
-    "snap_manageState": {}
+    "snap_manageState": {},
+    "snap_getBip44Entropy": [
+      {
+        "coinType": 6789
+      }
+    ]
   },
   "manifestVersion": "0.1"
 }
