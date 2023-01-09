@@ -35,7 +35,7 @@
     "ffjavascript": "nocturne-xyz/ffjavascript#luke/polyfill-rollup"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "^1.0.21-alpha",
+    "@nocturne-xyz/sdk": "^1.0.23-alpha",
     "bigint-json-serialization": "^1.0.1",
     "buffer": "^6.0.3"
   },
