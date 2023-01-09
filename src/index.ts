@@ -13,7 +13,7 @@ import {
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
 import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
-import { OnRpcRequestHandler } from "@metamask/snap-types";
+import { OnRpcRequestHandler } from "@metamask/snaps-types";
 import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
 
@@ -26,13 +26,12 @@ const WALLET_ADDRESS = "0xE706317bf66b1C741CfCa5dCf5B78A44B5eD79e0";
  * @param originString - The origin string.
  * @returns A message based on the origin.
  */
-export const getMessage = (originString: string): string =>
-  `Hello, ${originString}!`;
+const getMessage = (originString: string): string => `Hello, ${originString}!`;
 
-export const NOCTURNE_BIP44_COINTYPE = 6789;
+const NOCTURNE_BIP44_COINTYPE = 6789;
 
 async function getNocturnePrivKeyFromBIP44(): Promise<NocturnePrivKey> {
-  const nocturneNode = await wallet.request({
+  const nocturneNode = await snap.request({
     method: "snap_getBip44Entropy",
     params: {
       coinType: NOCTURNE_BIP44_COINTYPE,
@@ -94,7 +93,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   console.log("Switching on method: ", request.method);
   switch (request.method) {
     case "hello":
-      return wallet.request({
+      return snap.request({
         method: "snap_confirm",
         params: [
           {
@@ -136,7 +135,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       await context.ensureMinimumForOperationRequest(operationRequest);
 
       // Confirm spend sig auth
-      await wallet.request({
+      await snap.request({
         method: "snap_confirm",
         params: [
           {

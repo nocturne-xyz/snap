@@ -30,12 +30,14 @@
     "test:unit": ""
   },
   "resolutions": {
-    "ffjavascript": "nocturne-xyz/ffjavascript"
+    "blake-hash": "nocturne-xyz/blake-hash#luke/polyfill",
+    "circomlibjs": "nocturne-xyz/circomlibjs#luke/polyfill",
+    "ffjavascript": "nocturne-xyz/ffjavascript#luke/polyfill-rollup"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "^1.0.14-alpha",
+    "@nocturne-xyz/sdk": "^1.0.21-alpha",
     "bigint-json-serialization": "^1.0.1",
-    "ethers": "^5.7.2"
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^2.0.3",
@@ -44,8 +46,8 @@
     "@metamask/eslint-config-nodejs": "^10.0.0",
     "@metamask/eslint-config-typescript": "^10.0.0",
     "@metamask/key-tree": "^6.0.0",
-    "@metamask/snap-types": "^0.22.0",
-    "@metamask/snaps-cli": "^0.22.0",
+    "@metamask/snaps-cli": "^0.27.1",
+    "@metamask/snaps-types": "^0.27.1",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.20.0",
     "chai": "^4.3.6",

@@ -28,5 +28,5 @@
   "type": "module",
   "exclude": ["node_modules", "dist", "config"],
   "include": ["index.ts", "src", "src/**/*.ts", "scripts/*.ts", "package.json"],
-  "files": ["./node_modules/@metamask/snap-types/global.d.ts"]
+  "files": ["./node_modules/@metamask/snaps-types/global.d.ts"]
 }
