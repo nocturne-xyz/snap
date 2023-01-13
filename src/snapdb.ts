@@ -7,7 +7,7 @@ export class SnapKvStore implements KVStore {
       method: "snap_manageState",
       params: ["get"],
     });
-    kv.loadFromDump(maybeState as Record<string, any>);
+    await kv.loadFromDump((maybeState as Record<string, any>) ?? {});
     return kv;
   }
 
@@ -27,14 +27,14 @@ export class SnapKvStore implements KVStore {
 
   async putString(key: string, value: string): Promise<boolean> {
     const kv = await this.getState();
-    kv.putString(key, value);
+    await kv.putString(key, value);
     await this.flushToDisk(kv);
     return true;
   }
 
   async remove(key: string): Promise<boolean> {
     const kv = await this.getState();
-    kv.remove(key);
+    await kv.remove(key);
     await this.flushToDisk(kv);
     return true;
   }
@@ -51,7 +51,8 @@ export class SnapKvStore implements KVStore {
 
   async putNumber(key: string, value: number): Promise<boolean> {
     const kv = await this.getState();
-    kv.putNumber(key, value);
+    await kv.putNumber(key, value);
+
     await this.flushToDisk(kv);
     return true;
   }
@@ -63,7 +64,7 @@ export class SnapKvStore implements KVStore {
 
   async putBigInt(key: string, value: bigint): Promise<boolean> {
     const kv = await this.getState();
-    kv.putBigInt(key, value);
+    await kv.putBigInt(key, value);
     await this.flushToDisk(kv);
     return true;
   }
@@ -83,7 +84,7 @@ export class SnapKvStore implements KVStore {
 
   async putMany(kvs: KV[]): Promise<boolean> {
     const kv = await this.getState();
-    kv.putMany(kvs);
+    await kv.putMany(kvs);
     await this.flushToDisk(kv);
     return true;
   }
@@ -94,6 +95,6 @@ export class SnapKvStore implements KVStore {
   }
 
   async close(): Promise<void> {
-    return new Promise(() => {});
+    return;
   }
 }

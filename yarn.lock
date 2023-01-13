@@ -2100,21 +2100,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/contracts@npm:1.0.2-alpha":
-  version: 1.0.2-alpha
-  resolution: "@nocturne-xyz/contracts@npm:1.0.2-alpha"
+"@nocturne-xyz/contracts@npm:1.0.4-alpha":
+  version: 1.0.4-alpha
+  resolution: "@nocturne-xyz/contracts@npm:1.0.4-alpha"
   dependencies:
     "@openzeppelin/contracts": 4.7.3
     "@openzeppelin/contracts-upgradeable": 4.7.3
-  checksum: 8f1f89a5195fdb30007391bcdcc80a3e46591a780175784f93e226a236001626e8ecd71a8e7d591da59941d852cf9f3177709411f59cadf569ef5b4a2479e8cb
+  checksum: 9364cba1cd1eed910f2a9ab53ce394c7795c0470ea96623e18f01f538d8b5c7924e218be5816ceacf9acdfd26dd5445b9ca8ed8efafc69dab28ab24c945d3c35
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/sdk@npm:^1.0.28-alpha":
-  version: 1.0.28-alpha
-  resolution: "@nocturne-xyz/sdk@npm:1.0.28-alpha"
+"@nocturne-xyz/sdk@npm:^1.0.36-alpha":
+  version: 1.0.36-alpha
+  resolution: "@nocturne-xyz/sdk@npm:1.0.36-alpha"
   dependencies:
-    "@nocturne-xyz/contracts": 1.0.2-alpha
+    "@nocturne-xyz/contracts": 1.0.4-alpha
     "@types/randombytes": ^2.0.0
     "@zk-kit/incremental-merkle-tree": ^1.0.0
     big-integer: ^1.6.42
@@ -2125,7 +2125,7 @@ __metadata:
     js-sha256: ^0.9.0
     randombytes: ^2.1.0
     sorted-btree: ^1.8.1
-  checksum: 4335b8aed98ce7c41f5aaf65b32ad63a218c20614ecb370a8bfc202cf1c1e02742f151a83850af5d59218061718129c3b8c9a7f4eaedc7f4c12e5993717f3a09
+  checksum: ef04e4e1c53bfbb1f9a91f0afe8c6248c265323a426db57bdce0dc3224b1a3d92754162c64f203594926ae32b3c1a548a975da2110fe67b9df925352b3055393
   languageName: node
   linkType: hard
 
@@ -2141,7 +2141,7 @@ __metadata:
     "@metamask/key-tree": ^6.0.0
     "@metamask/snaps-cli": ^0.27.1
     "@metamask/snaps-types": ^0.27.1
-    "@nocturne-xyz/sdk": ^1.0.28-alpha
+    "@nocturne-xyz/sdk": ^1.0.36-alpha
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.20.0
     bigint-json-serialization: ^1.0.1
@@ -3391,9 +3391,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001443
-  resolution: "caniuse-lite@npm:1.0.30001443"
-  checksum: e39c17c54c7a2e263c05a7391b1126014be88826e5cacd6cf9e976b87c5a3a3ea3e53ff5d410093dbd56fac7b50fba4d55c2fa4d6b9c6bd28202886d7fedfd70
+  version: 1.0.30001444
+  resolution: "caniuse-lite@npm:1.0.30001444"
+  checksum: 3d6436e2eea8ee77fdca906f481fd5513eec836d3c5ef395da96872f8e67e0db4b898430a588745752e43fabf0503dc351ff1ab710717c33451bdc8f09a7b5cf
   languageName: node
   linkType: hard
 

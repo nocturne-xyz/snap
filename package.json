@@ -35,7 +35,7 @@
     "ffjavascript": "nocturne-xyz/ffjavascript#seb/polyfill"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "^1.0.28-alpha",
+    "@nocturne-xyz/sdk": "^1.0.36-alpha",
     "bigint-json-serialization": "^1.0.1",
     "buffer": "^6.0.3"
   },
