@@ -31,11 +31,11 @@
   },
   "resolutions": {
     "blake-hash": "nocturne-xyz/blake-hash#luke/polyfill",
-    "circomlibjs": "nocturne-xyz/circomlibjs#luke/polyfill",
-    "ffjavascript": "nocturne-xyz/ffjavascript#luke/polyfill-rollup"
+    "circomlibjs": "nocturne-xyz/circomlibjs#seb/polyfill",
+    "ffjavascript": "nocturne-xyz/ffjavascript#seb/polyfill"
   },
   "dependencies": {
-    "@nocturne-xyz/sdk": "^1.0.23-alpha",
+    "@nocturne-xyz/sdk": "^1.0.28-alpha",
     "bigint-json-serialization": "^1.0.1",
     "buffer": "^6.0.3"
   },
