@@ -31,7 +31,7 @@ const getMessage = (originString: string): string => `Hello, ${originString}!`;
 const NOCTURNE_BIP44_COINTYPE = 6789;
 
 async function getNocturnePrivKeyFromBIP44(): Promise<NocturnePrivKey> {
-  const nocturneNode = await snap.request({
+  const nocturneNode = await wallet.request({
     method: "snap_getBip44Entropy",
     params: {
       coinType: NOCTURNE_BIP44_COINTYPE,
@@ -93,7 +93,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   console.log("Switching on method: ", request.method);
   switch (request.method) {
     case "hello":
-      return snap.request({
+      return wallet.request({
         method: "snap_confirm",
         params: [
           {
@@ -135,7 +135,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       await context.ensureMinimumForOperationRequest(operationRequest);
 
       // Confirm spend sig auth
-      await snap.request({
+      await wallet.request({
         method: "snap_confirm",
         params: [
           {
