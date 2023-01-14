@@ -74,12 +74,12 @@ export class SnapKvStore implements KVStore {
     endKey: string
   ): Promise<AsyncIterable<KV>> {
     const kv = await this.getState();
-    return kv.iterRange(startKey, endKey);
+    return await kv.iterRange(startKey, endKey);
   }
 
   async iterPrefix(prefix: string): Promise<AsyncIterable<KV>> {
     const kv = await this.getState();
-    return kv.iterPrefix(prefix);
+    return await kv.iterPrefix(prefix);
   }
 
   async putMany(kvs: KV[]): Promise<boolean> {
