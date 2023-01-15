@@ -13,12 +13,12 @@ import {
 } from "@nocturne-xyz/sdk";
 import { ethers } from "ethers";
 import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
-import { OnRpcRequestHandler } from "@metamask/snap-types";
+import { OnRpcRequestHandler } from "@metamask/snaps-types";
 import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
 
 const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
-const WALLET_ADDRESS = "0xE706317bf66b1C741CfCa5dCf5B78A44B5eD79e0";
+const WALLET_ADDRESS = "0x9e4Fa3251ee437379398e486E9A27A997d90ce51";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -26,10 +26,9 @@ const WALLET_ADDRESS = "0xE706317bf66b1C741CfCa5dCf5B78A44B5eD79e0";
  * @param originString - The origin string.
  * @returns A message based on the origin.
  */
-export const getMessage = (originString: string): string =>
-  `Hello, ${originString}!`;
+const getMessage = (originString: string): string => `Hello, ${originString}!`;
 
-export const NOCTURNE_BIP44_COINTYPE = 6789;
+const NOCTURNE_BIP44_COINTYPE = 6789;
 
 async function getNocturnePrivKeyFromBIP44(): Promise<NocturnePrivKey> {
   const nocturneNode = await wallet.request({
@@ -63,13 +62,13 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const kvStore = new SnapKvStore();
   const notesDB = new NotesDB(kvStore);
   const merkleDB = new MerkleDB(kvStore);
+  const provider = new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL);
 
   const nocturnePrivKey = await getNocturnePrivKeyFromBIP44();
   console.log(
     "Snap Nocturne Canonical Address: ",
     nocturnePrivKey.toCanonAddress()
   );
-  console.log("Snap Nocturne Address: ", nocturnePrivKey.toAddress());
 
   const signer = new NocturneSigner(nocturnePrivKey);
 
@@ -77,16 +76,15 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     notesDB,
     signer,
     WALLET_ADDRESS,
-    new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL)
+    provider
   );
+
   const context = new NocturneContext(
     signer,
     new MockJoinSplitProver(),
-    await LocalMerkleProver.fromDb(
-      WALLET_ADDRESS,
-      new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL),
-      merkleDB
-    ),
+    provider,
+    WALLET_ADDRESS,
+    await LocalMerkleProver.fromDb(WALLET_ADDRESS, provider, merkleDB),
     notesManager,
     notesDB
   );
@@ -94,7 +92,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   console.log("Switching on method: ", request.method);
   switch (request.method) {
     case "hello":
-      return wallet.request({
+      return await wallet.request({
         method: "snap_confirm",
         params: [
           {
@@ -113,18 +111,29 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case "nocturne_getAllBalances":
       return JSON.stringify(await context.getAllAssetBalances());
     case "nocturne_syncNotes":
-      await context.syncNotes();
-      console.log(
-        "Synced notes, state: ",
-        JSON.stringify(await kvStore.getState())
-      );
+      try {
+        await context.syncNotes();
+        console.log(
+          "Synced notes, state: ",
+          JSON.stringify(await kvStore.getState())
+        );
+      } catch (e) {
+        console.log("Error syncing notes: ", e);
+        throw e;
+      }
       return;
     case "nocturne_syncLeaves":
-      await context.syncLeaves();
-      console.log(
-        "Synced leaves, state: ",
-        JSON.stringify(await kvStore.getState())
-      );
+      try {
+        await context.syncLeaves();
+        console.log(
+          "Synced leaves, state: ",
+          JSON.stringify(await kvStore.getState())
+        );
+      } catch (e) {
+        console.log("Error syncing leaves: ", e);
+        throw e;
+      }
+
       return;
     case "nocturne_getJoinSplitInputs":
       console.log("Request params: ", request.params);
@@ -147,9 +156,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
         ],
       });
 
-      const preProofOperationInputs = await context.tryGetPreProofOperation(
-        operationRequest
-      );
+      console.log("Operation request: ", operationRequest);
+
+      const preProofOperationInputs = await context.tryGetPreProofOperation({
+        ...operationRequest,
+        executionGasLimit: 1_000_000n,
+        maxNumRefunds: 1n,
+      });
+
       console.log(
         "PreProofOperationInputsAndProofInputs: ",
         JSON.stringify(preProofOperationInputs)
