@@ -113,6 +113,10 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case "nocturne_syncNotes":
       try {
         await context.syncNotes();
+        console.log(
+          "Synced notes, state: ",
+          JSON.stringify(await kvStore.getState())
+        );
       } catch (e) {
         console.log("Error syncing notes: ", e);
         throw e;
@@ -121,6 +125,10 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case "nocturne_syncLeaves":
       try {
         await context.syncLeaves();
+        console.log(
+          "Synced leaves, state: ",
+          JSON.stringify(await kvStore.getState())
+        );
       } catch (e) {
         console.log("Error syncing leaves: ", e);
         throw e;
