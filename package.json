@@ -30,9 +30,8 @@
     "test:unit": ""
   },
   "resolutions": {
-    "blake-hash": "nocturne-xyz/blake-hash#luke/polyfill",
-    "circomlibjs": "nocturne-xyz/circomlibjs#seb/polyfill",
-    "ffjavascript": "nocturne-xyz/ffjavascript#seb/polyfill"
+    "blake-hash": "nocturne-xyz/blake-hash",
+    "ffjavascript": "nocturne-xyz/ffjavascript"
   },
   "dependencies": {
     "@nocturne-xyz/sdk": "^1.0.36-alpha",
