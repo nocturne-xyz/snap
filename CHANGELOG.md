@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+- set node version in changelog to 18.12.1
 - remove default `verificationGas` and `gasPrice`
 - clean up resolutions
 - fix missing await bugs
