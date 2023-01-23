@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+- remove default `verificationGas` and `gasPrice`
 - clean up resolutions
 - fix missing await bugs
 - Add permission to manifest for `snap_getBip44Entropy`.
