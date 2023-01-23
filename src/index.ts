@@ -19,6 +19,7 @@ import * as JSON from "bigint-json-serialization";
 
 const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
 const WALLET_ADDRESS = "0x9e4Fa3251ee437379398e486E9A27A997d90ce51";
+const ACCOUNTANT_ADDRESS = "0x9e4Fa3251ee437379398e486E9A27A997d90ce51";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -75,8 +76,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const notesManager = new LocalNotesManager(
     notesDB,
     signer,
-    WALLET_ADDRESS,
+    ACCOUNTANT_ADDRESS,
     provider
+  );
+
+  const localMerkleProver = await LocalMerkleProver.fromDb(
+    ACCOUNTANT_ADDRESS,
+    provider,
+    merkleDB
   );
 
   const context = new NocturneContext(
@@ -84,7 +91,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     new MockJoinSplitProver(),
     provider,
     WALLET_ADDRESS,
-    await LocalMerkleProver.fromDb(WALLET_ADDRESS, provider, merkleDB),
+    localMerkleProver,
     notesManager,
     notesDB
   );
