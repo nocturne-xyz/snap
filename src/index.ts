@@ -18,7 +18,7 @@ import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
 
 const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
-const WALLET_ADDRESS = "0x9e4Fa3251ee437379398e486E9A27A997d90ce51";
+const WALLET_ADDRESS = "0xfA34985567851A7A1f748f1CdDb2e06715a83216";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -158,11 +158,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
       console.log("Operation request: ", operationRequest);
 
-      const preProofOperationInputs = await context.tryGetPreProofOperation({
-        ...operationRequest,
-        executionGasLimit: 1_000_000n,
-        maxNumRefunds: 1n,
-      });
+      const preProofOperationInputs = await context.tryGetPreProofOperation(
+        operationRequest
+      );
 
       console.log(
         "PreProofOperationInputsAndProofInputs: ",
