@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+- don't set default gas params when getting joinsplit inputs
+- update SDK
 - set node version in changelog to 18.12.1
 - remove default `verificationGas` and `gasPrice`
 - clean up resolutions
