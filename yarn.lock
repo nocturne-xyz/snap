@@ -2100,7 +2100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/contracts@npm:1.0.4-alpha":
+"@nocturne-xyz/contracts@npm:^1.0.4-alpha":
   version: 1.0.4-alpha
   resolution: "@nocturne-xyz/contracts@npm:1.0.4-alpha"
   dependencies:
@@ -2110,22 +2110,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/sdk@npm:^1.0.42-alpha":
-  version: 1.0.42-alpha
-  resolution: "@nocturne-xyz/sdk@npm:1.0.42-alpha"
+"@nocturne-xyz/sdk@npm:^1.0.46-alpha":
+  version: 1.0.46-alpha
+  resolution: "@nocturne-xyz/sdk@npm:1.0.46-alpha"
   dependencies:
-    "@nocturne-xyz/contracts": 1.0.4-alpha
+    "@nocturne-xyz/contracts": ^1.0.4-alpha
     "@types/randombytes": ^2.0.0
     "@zk-kit/incremental-merkle-tree": ^1.0.0
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
-    circomlibjs: "github:nocturne-xyz/circomlibjs"
+    circomlibjs: nocturne-xyz/circomlibjs
     ethers: ^5.0.0
     ffjavascript: 0.2.57
     js-sha256: ^0.9.0
     randombytes: ^2.1.0
     sorted-btree: ^1.8.1
-  checksum: 3a46d5bbd8cc2d1cde8aef9e26a02f46f06a787060ea6ebf310f55cc820b60807dbd467abfee5d8e09266103e23bf9339e2ec8b9a25a9f13e4478eda0142af4e
+  checksum: 19828c2cda81fd80b9c2ae1269aaee754163b3b3162cee629d587600501f1e7e00c061bfefc1b77327a18051d093565d4dad5b8e6abeb48b4a192cc5a86c4f03
   languageName: node
   linkType: hard
 
@@ -2141,7 +2141,7 @@ __metadata:
     "@metamask/key-tree": ^6.0.0
     "@metamask/snaps-cli": ^0.27.1
     "@metamask/snaps-types": ^0.27.1
-    "@nocturne-xyz/sdk": ^1.0.42-alpha
+    "@nocturne-xyz/sdk": ^1.0.46-alpha
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.20.0
     bigint-json-serialization: ^1.0.1
@@ -3483,7 +3483,7 @@ blake-hash@nocturne-xyz/blake-hash:
   languageName: node
   linkType: hard
 
-"circomlibjs@github:nocturne-xyz/circomlibjs":
+circomlibjs@nocturne-xyz/circomlibjs:
   version: 0.0.8
   resolution: "circomlibjs@https://github.com/nocturne-xyz/circomlibjs.git#commit=d32b33e2f0b236a828be95111412a1c0381cf9e4"
   dependencies:
