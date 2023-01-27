@@ -158,15 +158,20 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
       console.log("Operation request: ", operationRequest);
 
-      const preProofOperationInputs = await context.tryGetPreProofOperation(
-        operationRequest
-      );
+      try {
+        const preProofOperationInputs = await context.tryGetPreProofOperation(
+          operationRequest
+        );
+        console.log(
+          "PreProofOperationInputsAndProofInputs: ",
+          JSON.stringify(preProofOperationInputs)
+        );
+        return JSON.stringify(preProofOperationInputs);
+      } catch (err) {
+        console.log("Error getting pre-proof operation:", err);
+        throw err;
+      }
 
-      console.log(
-        "PreProofOperationInputsAndProofInputs: ",
-        JSON.stringify(preProofOperationInputs)
-      );
-      return JSON.stringify(preProofOperationInputs);
     case "nocturne_clearDb":
       await kvStore.clear();
       console.log(
