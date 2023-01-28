@@ -21,10 +21,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const WALLET_ADDRESS = "0xfA34985567851A7A1f748f1CdDb2e06715a83216";
-const RPC_URL = process.env.RPC_URL;
-if (!RPC_URL) {
-  throw new Error("Snap missing RPC_URL");
-}
+const START_BLOCK = 0;
+const RPC_URL = "http://127.0.0.1:8545";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -82,7 +80,15 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     notesDB,
     signer,
     WALLET_ADDRESS,
-    provider
+    provider,
+    { startBlock: START_BLOCK }
+  );
+
+  const merkleProver = await LocalMerkleProver.fromDb(
+    WALLET_ADDRESS,
+    provider,
+    merkleDB,
+    { startBlock: START_BLOCK }
   );
 
   const context = new NocturneContext(
@@ -90,7 +96,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     new MockJoinSplitProver(),
     provider,
     WALLET_ADDRESS,
-    await LocalMerkleProver.fromDb(WALLET_ADDRESS, provider, merkleDB),
+    merkleProver,
     notesManager,
     notesDB
   );
