@@ -16,9 +16,15 @@ import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
 import { OnRpcRequestHandler } from "@metamask/snaps-types";
 import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
+import * as dotenv from "dotenv";
 
-const LOCAL_HOST_URL = "http://127.0.0.1:8545/";
+dotenv.config();
+
 const WALLET_ADDRESS = "0xfA34985567851A7A1f748f1CdDb2e06715a83216";
+const RPC_URL = process.env.RPC_URL;
+if (!RPC_URL) {
+  throw new Error("Snap missing RPC_URL");
+}
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -62,7 +68,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   const kvStore = new SnapKvStore();
   const notesDB = new NotesDB(kvStore);
   const merkleDB = new MerkleDB(kvStore);
-  const provider = new ethers.providers.JsonRpcProvider(LOCAL_HOST_URL);
+  const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
   const nocturnePrivKey = await getNocturnePrivKeyFromBIP44();
   console.log(
