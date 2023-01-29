@@ -16,9 +16,6 @@ import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
 import { OnRpcRequestHandler } from "@metamask/snaps-types";
 import { SnapKvStore } from "./snapdb";
 import * as JSON from "bigint-json-serialization";
-import * as dotenv from "dotenv";
-
-dotenv.config();
 
 const WALLET_ADDRESS = "0xfA34985567851A7A1f748f1CdDb2e06715a83216";
 const START_BLOCK = 0;
