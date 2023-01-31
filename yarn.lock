@@ -1583,10 +1583,10 @@
     "@openzeppelin/contracts" "4.7.3"
     "@openzeppelin/contracts-upgradeable" "4.7.3"
 
-"@nocturne-xyz/sdk@^1.0.56-alpha":
-  version "1.0.56-alpha"
-  resolved "https://registry.yarnpkg.com/@nocturne-xyz/sdk/-/sdk-1.0.56-alpha.tgz#b8c69251736fa2d18a89093f4df5c82d197358d7"
-  integrity sha512-tKn6aM+t+ukQNxcjoa1D9RHv6/aJ96pgB3La9J11gLNY271jKqo43QF5u2a7pymjnSrSc+o4hSC3EijCLH7wWw==
+"@nocturne-xyz/sdk@^1.0.57-alpha":
+  version "1.0.57-alpha"
+  resolved "https://registry.yarnpkg.com/@nocturne-xyz/sdk/-/sdk-1.0.57-alpha.tgz#c83daea18065e94b277a8a9d5f7a5debc56d5264"
+  integrity sha512-YGk+0tQ9WbX/xnC9izB6udHSN61iZHIZz+vR1rKMbIK4c+loUtHtbugeCtSVDvknRYzW/DnQRYnpr3o41u3i+w==
   dependencies:
     "@nocturne-xyz/contracts" "^1.0.4-alpha"
     "@types/randombytes" "^2.0.0"

@@ -19,7 +19,8 @@ import * as JSON from "bigint-json-serialization";
 
 const WALLET_ADDRESS = "0xfA34985567851A7A1f748f1CdDb2e06715a83216";
 const START_BLOCK = 0;
-const RPC_URL = "http://127.0.0.1:8545";
+const RPC_URL =
+  "https://eth-goerli.g.alchemy.com/v2/meBVzK1NR_VyKM7wVmOHj1hAbakk4esk";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
