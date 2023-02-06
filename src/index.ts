@@ -2,10 +2,10 @@ import {
   NocturneContext,
   NocturnePrivKey,
   NocturneSigner,
-  LocalMerkleProver,
-  LocalNotesManager,
+  DefaultMerkleProver,
+  DefaultNotesManager,
   MockJoinSplitProver,
-  NocturneAddressTrait,
+  StealthAddressTrait,
   OperationRequest,
   NotesDB,
   MerkleDB,
@@ -74,7 +74,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
   const signer = new NocturneSigner(nocturnePrivKey);
 
-  const notesManager = new LocalNotesManager(
+  const notesManager = new DefaultNotesManager(
     notesDB,
     signer,
     WALLET_ADDRESS,
@@ -82,7 +82,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     { startBlock: START_BLOCK }
   );
 
-  const merkleProver = await LocalMerkleProver.fromDb(
+  const merkleProver = await DefaultMerkleProver.fromDb(
     WALLET_ADDRESS,
     provider,
     merkleDB,
@@ -116,7 +116,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       });
     case "nocturne_getRandomizedAddr":
       return JSON.stringify(
-        NocturneAddressTrait.randomize(context.signer.address)
+        StealthAddressTrait.randomize(context.signer.address)
       );
     case "nocturne_getAllBalances":
       return JSON.stringify(await context.getAllAssetBalances());

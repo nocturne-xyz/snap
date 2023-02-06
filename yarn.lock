@@ -2100,21 +2100,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/contracts@npm:^1.0.4-alpha":
-  version: 1.0.4-alpha
-  resolution: "@nocturne-xyz/contracts@npm:1.0.4-alpha"
+"@nocturne-xyz/contracts@npm:^1.0.7-alpha":
+  version: 1.0.7-alpha
+  resolution: "@nocturne-xyz/contracts@npm:1.0.7-alpha"
   dependencies:
     "@openzeppelin/contracts": 4.7.3
     "@openzeppelin/contracts-upgradeable": 4.7.3
-  checksum: 9364cba1cd1eed910f2a9ab53ce394c7795c0470ea96623e18f01f538d8b5c7924e218be5816ceacf9acdfd26dd5445b9ca8ed8efafc69dab28ab24c945d3c35
+  checksum: c8cdb9c18aeabe8cc4c74127d9ab99203f00db771781c6c966cc6bda97db8e80ec3cd474e372c13e273581a887e86a757690a1029abb631dfa42c6b14753501b
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/sdk@npm:^1.0.63-alpha":
-  version: 1.0.63-alpha
-  resolution: "@nocturne-xyz/sdk@npm:1.0.63-alpha"
+"@nocturne-xyz/sdk@npm:^1.0.64-alpha":
+  version: 1.0.64-alpha
+  resolution: "@nocturne-xyz/sdk@npm:1.0.64-alpha"
   dependencies:
-    "@nocturne-xyz/contracts": ^1.0.4-alpha
+    "@nocturne-xyz/contracts": ^1.0.7-alpha
     "@types/randombytes": ^2.0.0
     "@zk-kit/incremental-merkle-tree": ^1.0.0
     big-integer: ^1.6.42
@@ -2125,7 +2125,7 @@ __metadata:
     js-sha256: ^0.9.0
     randombytes: ^2.1.0
     sorted-btree: ^1.8.1
-  checksum: ca542cb671f1e423c114aaae4143774c53ccf0ae11874c2b7c2c8c9dd0ccefd70630976b3fcd38da1e7bf88367a407ff610f5f654f556ac243ea8f17c68f36c9
+  checksum: ca44bba90108fb508725b00eccf2c8eafb645a85c0f47bbc7b7fba5b8fa5e9ad33ee8cd3e90a49f347e73849e08bde27c6b541042954fff7f80da1c0e42c2ccd
   languageName: node
   linkType: hard
 
@@ -2141,7 +2141,7 @@ __metadata:
     "@metamask/key-tree": ^6.0.0
     "@metamask/snaps-cli": ^0.27.1
     "@metamask/snaps-types": ^0.27.1
-    "@nocturne-xyz/sdk": ^1.0.63-alpha
+    "@nocturne-xyz/sdk": ^1.0.64-alpha
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.20.0
     bigint-json-serialization: ^1.0.1
