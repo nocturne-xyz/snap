@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+- Bump SDK to 1.0.66-alpha
 - Bump SDK to 1.0.60-alpha to include joinsplit processing after refund processing fix
 - Add `START_BLOCK` and `RPC_URL` consts for overriding
 - Bump sdk to 1.0.55-alpha
