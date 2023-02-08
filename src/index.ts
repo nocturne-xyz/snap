@@ -2,10 +2,10 @@ import {
   NocturneContext,
   NocturnePrivKey,
   NocturneSigner,
-  LocalMerkleProver,
-  LocalNotesManager,
+  DefaultMerkleProver,
+  DefaultNotesManager,
   MockJoinSplitProver,
-  NocturneAddressTrait,
+  StealthAddressTrait,
   OperationRequest,
   NotesDB,
   MerkleDB,
@@ -19,8 +19,9 @@ import * as JSON from "bigint-json-serialization";
 
 const WALLET_ADDRESS = "0xfA34985567851A7A1f748f1CdDb2e06715a83216";
 const START_BLOCK = 0;
-const RPC_URL =
-  "https://eth-goerli.g.alchemy.com/v2/meBVzK1NR_VyKM7wVmOHj1hAbakk4esk";
+// const RPC_URL =
+//   "https://eth-goerli.g.alchemy.com/v2/meBVzK1NR_VyKM7wVmOHj1hAbakk4esk";
+const RPC_URL = "http://127.0.0.1:8545/";
 
 /**
  * Get a message from the origin. For demonstration purposes only.
@@ -74,7 +75,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
   const signer = new NocturneSigner(nocturnePrivKey);
 
-  const notesManager = new LocalNotesManager(
+  const notesManager = new DefaultNotesManager(
     notesDB,
     signer,
     WALLET_ADDRESS,
@@ -82,7 +83,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     { startBlock: START_BLOCK }
   );
 
-  const merkleProver = await LocalMerkleProver.fromDb(
+  const merkleProver = await DefaultMerkleProver.fromDb(
     WALLET_ADDRESS,
     provider,
     merkleDB,
@@ -116,7 +117,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       });
     case "nocturne_getRandomizedAddr":
       return JSON.stringify(
-        NocturneAddressTrait.randomize(context.signer.address)
+        StealthAddressTrait.randomize(context.signer.address)
       );
     case "nocturne_getAllBalances":
       return JSON.stringify(await context.getAllAssetBalances());
