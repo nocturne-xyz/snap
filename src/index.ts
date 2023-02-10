@@ -151,7 +151,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       ) as OperationRequest;
 
       // Ensure user has minimum balance for request
-      if (!(await context.hasEnoughBalanceForOperationRequest(operationRequest))) {
+      if (
+        !(await context.hasEnoughBalanceForOperationRequest(operationRequest))
+      ) {
         throw new Error("Insufficient balance for operation request");
       }
 
@@ -170,10 +172,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       console.log("Operation request: ", operationRequest);
 
       try {
-        const preSignOp = await context.prepareOperation(
-          operationRequest
-        );
-        const signedOp = await context.signOperation(preSignOp); 
+        const preSignOp = await context.prepareOperation(operationRequest);
+        const signedOp = await context.signOperation(preSignOp);
         console.log(
           "PreProofOperationInputsAndProofInputs: ",
           JSON.stringify(signedOp)
