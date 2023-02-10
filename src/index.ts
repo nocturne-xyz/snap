@@ -2,9 +2,8 @@ import {
   NocturneContext,
   NocturnePrivKey,
   NocturneSigner,
-  DefaultMerkleProver,
+  InMemoryMerkleProver,
   DefaultNotesManager,
-  MockJoinSplitProver,
   StealthAddressTrait,
   OperationRequest,
   NotesDB,
@@ -83,7 +82,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     { startBlock: START_BLOCK }
   );
 
-  const merkleProver = await DefaultMerkleProver.fromDb(
+  const merkleProver = await InMemoryMerkleProver.fromDb(
     WALLET_ADDRESS,
     provider,
     merkleDB,
@@ -92,7 +91,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
   const context = new NocturneContext(
     signer,
-    new MockJoinSplitProver(),
     provider,
     WALLET_ADDRESS,
     merkleProver,
@@ -153,7 +151,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       ) as OperationRequest;
 
       // Ensure user has minimum balance for request
-      await context.ensureMinimumForOperationRequest(operationRequest);
+      if (!(await context.hasEnoughBalanceForOperationRequest(operationRequest))) {
+        throw new Error("Insufficient balance for operation request");
+      }
 
       // Confirm spend sig auth
       await wallet.request({
@@ -170,14 +170,15 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       console.log("Operation request: ", operationRequest);
 
       try {
-        const preProofOperationInputs = await context.tryGetPreProofOperation(
+        const preSignOp = await context.prepareOperation(
           operationRequest
         );
+        const signedOp = await context.signOperation(preSignOp); 
         console.log(
           "PreProofOperationInputsAndProofInputs: ",
-          JSON.stringify(preProofOperationInputs)
+          JSON.stringify(signedOp)
         );
-        return JSON.stringify(preProofOperationInputs);
+        return JSON.stringify(signedOp);
       } catch (err) {
         console.log("Error getting pre-proof operation:", err);
         throw err;
