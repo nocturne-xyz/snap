@@ -2110,9 +2110,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/sdk@npm:^1.0.70-alpha":
-  version: 1.0.70-alpha
-  resolution: "@nocturne-xyz/sdk@npm:1.0.70-alpha"
+"@nocturne-xyz/sdk@npm:^1.0.71-alpha":
+  version: 1.0.71-alpha
+  resolution: "@nocturne-xyz/sdk@npm:1.0.71-alpha"
   dependencies:
     "@nocturne-xyz/contracts": ^1.0.7-alpha
     "@types/randombytes": ^2.0.0
@@ -2125,7 +2125,7 @@ __metadata:
     js-sha256: ^0.9.0
     randombytes: ^2.1.0
     sorted-btree: ^1.8.1
-  checksum: 68ffa20fa0e168540930d543ef5ac5d2ef5f526b084585a8f4d2926eed5fbfbff28c19b7291ae7bb30ad2a1454cf28501b1b62a92463b9cdc0545a90500b2023
+  checksum: 61b479a23017fffcfa01f72adfe20a7c7c3748f76739ede7fc435b6e645c833911895a950b70ee67367c481bf8c8f14966247cdf7acc2bdd566b74de546e7762
   languageName: node
   linkType: hard
 
@@ -2141,7 +2141,7 @@ __metadata:
     "@metamask/key-tree": ^6.0.0
     "@metamask/snaps-cli": ^0.27.1
     "@metamask/snaps-types": ^0.27.1
-    "@nocturne-xyz/sdk": ^1.0.70-alpha
+    "@nocturne-xyz/sdk": ^1.0.71-alpha
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.20.0
     bigint-json-serialization: ^1.0.1
