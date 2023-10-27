@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist"
+  },
+  "type": "module",
+  "exclude": ["node_modules", "dist", "config"],
+  "include": ["index.ts", "src", "src/**/*.ts", "scripts/*.ts", "src/**/*.json", "package.json"],
+  "files": ["../../node_modules/@metamask/snaps-types/global.d.ts"],
+}
