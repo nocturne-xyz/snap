@@ -1,11 +1,33 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "dist"
-  },
   "type": "module",
   "exclude": ["node_modules", "dist", "config"],
   "include": ["index.ts", "src", "src/**/*.ts", "scripts/*.ts", "src/**/*.json", "package.json"],
   "files": ["../../node_modules/@metamask/snaps-types/global.d.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2022", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": false,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "preserveSymlinks": true,
+    "preserveWatchOutput": true,
+    "pretty": false,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "target": "es2021",
+    "strict": true,
+    "allowJs": true,
+    "typeRoots": ["node_modules/@types", "types"]
+  }
 }
