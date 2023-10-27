@@ -1,0 +1,45 @@
+name: Build and Test Packages
+on: [push]
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      REDISMS_SYSTEM_BINARY: "/usr/bin/redis-server"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "v18.18.2"
+          cache: "yarn"
+
+      - name: corepack enable
+        run: corepack enable
+
+      - name: yarn install
+        run: |
+          yarn install --immutable
+
+      - name: yarn lint
+        run: |
+          yarn lint
+
+      - name: yarn prettier
+        run: |
+          yarn prettier:check
+
+      - name: yarn build
+        run: |
+          yarn build
+
+      - name: yarn test:unit
+        run: |
+          yarn test:unit

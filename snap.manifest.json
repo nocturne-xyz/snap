@@ -1,0 +1,25 @@
+{
+  "version": "0.7.1",
+  "description": "Nocturne Snap",
+  "proposedName": "Nocturne Snap",
+  "source": {
+    "shasum": "nBfRmdbvqvPBOgXBPmvqDuVaKZxIAXAEgAy0OhXOFOw=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@nocturne-xyz/snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "endowment:rpc": {
+      "dapps": true
+    },
+    "snap_dialog": {},
+    "endowment:network-access": {},
+    "snap_manageState": {}
+  },
+  "manifestVersion": "0.1"
+}
