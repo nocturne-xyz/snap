@@ -27,7 +27,9 @@
     "publish": "yarn build:clean && yarn npm publish --access public",
     "serve": "mm-snap serve",
     "start": "mm-snap watch",
-    "test:unit": "mocha --require ts-node/register test/** --timeout 45000 --exit"
+    "test:unit": "mocha --require ts-node/register test/** --timeout 45000 --exit",
+    "link:monorepo": "yarn link -A -r ../monorepo",
+    "unlink:monorepo": "yarn unlink -A ../monorepo"
   },
   "dependencies": {
     "@metamask/snaps-ui": "^0.32.2",
