@@ -31,10 +31,10 @@
   },
   "dependencies": {
     "@metamask/snaps-ui": "^0.32.2",
-    "@nocturne-xyz/client": "workspace:^",
-    "@nocturne-xyz/config": "workspace:^",
-    "@nocturne-xyz/core": "workspace:^",
-    "@nocturne-xyz/crypto": "workspace:^",
+    "@nocturne-xyz/client": "^3.0.3",
+    "@nocturne-xyz/config": "^1.3.1",
+    "@nocturne-xyz/core": "^3.1.0",
+    "@nocturne-xyz/crypto": "^0.3.0",
     "bigint-json-serialization": "^1.0.1",
     "buffer": "^6.0.3",
     "superstruct": "^1.0.3"
