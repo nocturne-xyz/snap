@@ -33,8 +33,8 @@
   },
   "dependencies": {
     "@metamask/snaps-ui": "^0.32.2",
-    "@nocturne-xyz/client": "^3.0.3",
-    "@nocturne-xyz/config": "^1.3.1",
+    "@nocturne-xyz/client": "^3.0.5",
+    "@nocturne-xyz/config": "^1.4.0",
     "@nocturne-xyz/core": "^3.1.0",
     "@nocturne-xyz/crypto": "^0.3.0",
     "bigint-json-serialization": "^1.0.1",

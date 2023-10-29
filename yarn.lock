@@ -2769,40 +2769,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/client@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@nocturne-xyz/client@npm:3.0.3"
+"@nocturne-xyz/client@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@nocturne-xyz/client@npm:3.0.5"
   dependencies:
-    "@nocturne-xyz/config": ^1.3.1
-    "@nocturne-xyz/contracts": ^1.2.1
+    "@nocturne-xyz/config": ^1.4.0
+    "@nocturne-xyz/contracts": ^2.0.0
     "@nocturne-xyz/core": ^3.1.0
     "@nocturne-xyz/crypto": ^0.3.0
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
     js-sha256: ^0.9.0
-  checksum: 43d04aadef460586b8b69615cb733b51b9497828fd4dfa071bcd030e3f917abb546d25ac17c55b0e6d52a3c3738487cbf1c3dcaf83c8b1a11aeb5208b7b11d46
+  checksum: 73934705f5b61bd007863f93ca377c4833105593f325e082f77b6f8b2e3f1dfdbe309288571f8608316746bbd6292c103a748e46e6fb64fcaddcc7247764a896
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/config@npm:^1.3.1":
-  version: 1.3.1
-  resolution: "@nocturne-xyz/config@npm:1.3.1"
+"@nocturne-xyz/config@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@nocturne-xyz/config@npm:1.4.0"
   dependencies:
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
-  checksum: 0874435151276d9d07d3b885dd03e020a9e17b8cc80659cf1ba1dbc54b2500d218f085a432f38bd3c60302802174ab3cba11e1fd35f76e95ac29fe8afd0f8f9f
+  checksum: 9aa83b37f62abca4a4f1b6e2bf4b74c8964965ee3679bcfb93df9f00411a6fde47ce9c68f30193a8caae617708375d3564f966b251c3a693fd57a37395918aed
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/contracts@npm:^1.2.0, @nocturne-xyz/contracts@npm:^1.2.1":
+"@nocturne-xyz/contracts@npm:^1.2.0":
   version: 1.2.1
   resolution: "@nocturne-xyz/contracts@npm:1.2.1"
   dependencies:
     "@openzeppelin/contracts": "npm:4.9.2"
     "@openzeppelin/contracts-upgradeable": "npm:4.9.2"
   checksum: 47fffc270aefd9fae101e16b5b99aff1b010418ef4a560d567ded62eab44a7c2eddcabf7aa5200a216605d4691438cd87f044ebd7513f7a480be6611be0eb7ad
+  languageName: node
+  linkType: hard
+
+"@nocturne-xyz/contracts@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@nocturne-xyz/contracts@npm:2.0.0"
+  dependencies:
+    "@openzeppelin/contracts": 4.9.2
+    "@openzeppelin/contracts-upgradeable": 4.9.2
+  checksum: f3e26dd1720042bf767da133102aba3c9cc1dc25ce7f4cafe68e2827659b896ce8d0dc05dc497c4882962d7522036071c9c6f25a5d028740a96a86166cf2db7a
   languageName: node
   linkType: hard
 
@@ -2852,8 +2862,8 @@ __metadata:
     "@metamask/snaps-cli": 0.32.2
     "@metamask/snaps-types": 0.32.2
     "@metamask/snaps-ui": ^0.32.2
-    "@nocturne-xyz/client": ^3.0.3
-    "@nocturne-xyz/config": ^1.3.1
+    "@nocturne-xyz/client": ^3.0.5
+    "@nocturne-xyz/config": ^1.4.0
     "@nocturne-xyz/core": ^3.1.0
     "@nocturne-xyz/crypto": ^0.3.0
     "@types/chai": ^4.3.9
