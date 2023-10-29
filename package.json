@@ -85,5 +85,6 @@
     "@nocturne-xyz/hasura-sync-adapters": "portal:../monorepo/sync/hasura-sync-adapters",
     "@nocturne-xyz/rpc-sync-adapters": "portal:../monorepo/sync/rpc-sync-adapters",
     "@nocturne-xyz/subgraph-sync-adapters": "portal:../monorepo/sync/subgraph-sync-adapters"
-  }
+  },
+  "packageManager": "yarn@3.2.4"
 }
