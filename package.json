@@ -17,6 +17,7 @@
     "clean": "rimraf dist",
     "cp-config": "cp ../config/configs/localhost.json ./src/config.json",
     "dev": "yarn build && yarn build:local && yarn serve",
+    "link:monorepo": "yarn link -A -r ../monorepo",
     "lint": "eslint --fix src --ext .ts",
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
@@ -28,8 +29,22 @@
     "serve": "mm-snap serve",
     "start": "mm-snap watch",
     "test:unit": "mocha --require ts-node/register test/** --timeout 45000 --exit",
-    "link:monorepo": "yarn link -A -r ../monorepo",
     "unlink:monorepo": "yarn unlink -A ../monorepo"
+  },
+  "resolutions": {
+    "@nocturne-xyz/client": "portal:../monorepo/packages/client",
+    "@nocturne-xyz/config": "portal:../monorepo/packages/config",
+    "@nocturne-xyz/core": "portal:../monorepo/packages/core",
+    "@nocturne-xyz/crypto": "portal:../monorepo/packages/crypto",
+    "@nocturne-xyz/frontend-sdk": "portal:../monorepo/packages/frontend-sdk",
+    "@nocturne-xyz/hasura-sync-adapters": "portal:../monorepo/sync/hasura-sync-adapters",
+    "@nocturne-xyz/idb-kv-store": "portal:../monorepo/packages/idb-kv-store",
+    "@nocturne-xyz/local-prover": "portal:../monorepo/packages/local-prover",
+    "@nocturne-xyz/offchain-utils": "portal:../monorepo/packages/offchain-utils",
+    "@nocturne-xyz/op-request-plugins": "portal:../monorepo/packages/op-request-plugins",
+    "@nocturne-xyz/persistent-log": "portal:../monorepo/packages/persistent-log",
+    "@nocturne-xyz/rpc-sync-adapters": "portal:../monorepo/sync/rpc-sync-adapters",
+    "@nocturne-xyz/subgraph-sync-adapters": "portal:../monorepo/sync/subgraph-sync-adapters"
   },
   "dependencies": {
     "@metamask/snaps-ui": "^0.32.2",
@@ -71,20 +86,11 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   },
-  "resolutions": {
-    "@nocturne-xyz/client": "portal:../monorepo/packages/client",
-    "@nocturne-xyz/config": "portal:../monorepo/packages/config",
-    "@nocturne-xyz/core": "portal:../monorepo/packages/core",
-    "@nocturne-xyz/crypto": "portal:../monorepo/packages/crypto",
-    "@nocturne-xyz/frontend-sdk": "portal:../monorepo/packages/frontend-sdk",
-    "@nocturne-xyz/idb-kv-store": "portal:../monorepo/packages/idb-kv-store",
-    "@nocturne-xyz/local-prover": "portal:../monorepo/packages/local-prover",
-    "@nocturne-xyz/offchain-utils": "portal:../monorepo/packages/offchain-utils",
-    "@nocturne-xyz/op-request-plugins": "portal:../monorepo/packages/op-request-plugins",
-    "@nocturne-xyz/persistent-log": "portal:../monorepo/packages/persistent-log",
-    "@nocturne-xyz/hasura-sync-adapters": "portal:../monorepo/sync/hasura-sync-adapters",
-    "@nocturne-xyz/rpc-sync-adapters": "portal:../monorepo/sync/rpc-sync-adapters",
-    "@nocturne-xyz/subgraph-sync-adapters": "portal:../monorepo/sync/subgraph-sync-adapters"
+  "packageManager": "yarn@3.2.4",
+  "engines": {
+    "node": ">=18"
   },
-  "packageManager": "yarn@3.2.4"
+  "volta": {
+    "node": "18.12.1"
+  }
 }
