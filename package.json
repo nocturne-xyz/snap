@@ -31,21 +31,6 @@
     "test:unit": "mocha --require ts-node/register test/** --timeout 45000 --exit",
     "unlink:monorepo": "yarn unlink -A ../monorepo"
   },
-  "resolutions": {
-    "@nocturne-xyz/client": "portal:../monorepo/packages/client",
-    "@nocturne-xyz/config": "portal:../monorepo/packages/config",
-    "@nocturne-xyz/core": "portal:../monorepo/packages/core",
-    "@nocturne-xyz/crypto": "portal:../monorepo/packages/crypto",
-    "@nocturne-xyz/frontend-sdk": "portal:../monorepo/packages/frontend-sdk",
-    "@nocturne-xyz/hasura-sync-adapters": "portal:../monorepo/sync/hasura-sync-adapters",
-    "@nocturne-xyz/idb-kv-store": "portal:../monorepo/packages/idb-kv-store",
-    "@nocturne-xyz/local-prover": "portal:../monorepo/packages/local-prover",
-    "@nocturne-xyz/offchain-utils": "portal:../monorepo/packages/offchain-utils",
-    "@nocturne-xyz/op-request-plugins": "portal:../monorepo/packages/op-request-plugins",
-    "@nocturne-xyz/persistent-log": "portal:../monorepo/packages/persistent-log",
-    "@nocturne-xyz/rpc-sync-adapters": "portal:../monorepo/sync/rpc-sync-adapters",
-    "@nocturne-xyz/subgraph-sync-adapters": "portal:../monorepo/sync/subgraph-sync-adapters"
-  },
   "dependencies": {
     "@metamask/snaps-ui": "^0.32.2",
     "@nocturne-xyz/client": "^3.0.3",
