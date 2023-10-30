@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.2
+
+### Patch Changes
+
+- 90a88fc: Pin yarn 3.2.1, bump dependencies after post-protocol-audit redeploy
+
 ## 0.7.1
 
 ### Patch Changes
