@@ -7,9 +7,12 @@ import {
 import {
   SnapRpcRequestHandlerArgs,
   RpcRequestMethod,
-  parseObjectValues,
+  parseParams,
   signOperation,
-  assertAllRpcMethodsHandled,
+  SetSpendKeyMethod,
+  SnapJsonRpcRequest,
+  SignCanonAddrRegistryEntryMethod,
+  SignOperationMethod,
 } from "@nocturne-xyz/client";
 import * as JSON from "bigint-json-serialization";
 import { ethers } from "ethers";
@@ -71,14 +74,16 @@ async function mustGetSigner(): Promise<NocturneSigner> {
  * @throws If the `snap_dialog` call failed.
  */
 export const onRpcRequest: OnRpcRequestHandler = async (args) => {
+  const { origin, request } = args;
   try {
-    const handledResponse = await handleRpcRequest(
-      args as unknown as SnapRpcRequestHandlerArgs
-    );
-    return { res: handledResponse ? JSON.stringify(handledResponse) : null };
-  } catch (e) {
-    console.error("Snap has thrown error for request: ", args.request);
-    throw e;
+    const handledResponse = await handleRpcRequest({
+      origin,
+      request: request as unknown as SnapJsonRpcRequest,
+    });
+    return { result: handledResponse ? JSON.stringify(handledResponse) : null };
+  } catch (error) {
+    console.error("snap threw error", { request, error });
+    return { error };
   }
 };
 
@@ -86,19 +91,19 @@ async function handleRpcRequest({
   origin,
   request,
 }: SnapRpcRequestHandlerArgs): Promise<RpcRequestMethod["return"]> {
-  //@ts-ignore
-  request.params = request.params
-    ? parseObjectValues(request.params)
+  const _params = request.params
+    ? parseParams<RpcRequestMethod['params']>(request.params)
     : undefined;
 
   console.log("Switching on method: ", request.method);
   switch (request.method) {
     case "nocturne_spendKeyIsSet": {
-      assert(request.params, UndefinedType);
+      assert(_params, UndefinedType);
       return await kvStore.containsKey(SPEND_KEY_DB_KEY);
     }
     case "nocturne_setSpendKey": {
-      assert(request.params, SetSpendKeyParams);
+      assert(_params, SetSpendKeyParams);
+      const params = _params as SetSpendKeyMethod["params"];
 
       if (!ALLOWED_ORIGINS.includes(origin)) {
         throw new Error(
@@ -115,13 +120,14 @@ async function handleRpcRequest({
 
       await kvStore.putString(
         SPEND_KEY_DB_KEY,
-        ethers.utils.hexlify(request.params.spendKey)
+        ethers.utils.hexlify(params.spendKey)
       );
 
       return;
     }
     case "nocturne_requestViewingKey": {
-      assert(request.params, UndefinedType);
+      assert(_params, UndefinedType);
+
       const signer = await mustGetSigner();
       const viewer = signer.viewer();
       return {
@@ -130,10 +136,11 @@ async function handleRpcRequest({
       };
     }
     case "nocturne_signCanonAddrRegistryEntry": {
-      assert(request.params, SignCanonAddrRegistryEntryParams);
+      assert(_params, SignCanonAddrRegistryEntryParams);
+      const params = _params as SignCanonAddrRegistryEntryMethod["params"];
 
       const signer = await mustGetSigner();
-      const { entry, chainId, registryAddress } = request.params;
+      const { entry, chainId, registryAddress } = params;
 
       const { heading: registryHeading, text: registryText } =
         makeSignCanonAddrRegistryEntryContent(entry, chainId, registryAddress);
@@ -168,10 +175,11 @@ async function handleRpcRequest({
       };
     }
     case "nocturne_signOperation": {
-      assert(request.params, SignOperationParams);
+      assert(_params, SignOperationParams);
+      const params = _params as SignOperationMethod["params"];
 
       const signer = await mustGetSigner();
-      const { op, metadata } = request.params;
+      const { op, metadata } = params;
       const contentItems = makeSignOperationContent(
         // specifies nothing about ordering
         metadata ?? { items: [] },
@@ -201,6 +209,6 @@ async function handleRpcRequest({
       }
     }
     default:
-      assertAllRpcMethodsHandled(request);
+      throw new Error(`Unsupported method: ${request.method}`);
   }
 }
