@@ -23,6 +23,7 @@ const DataHexString32Type = define(`DataHexString32Type`, isDataHexString32);
 
 export const SetSpendKeyParams = object({
   spendKey: DataHexString32Type,
+  eoaAddress: string(),
 });
 
 export const SignCanonAddrRegistryEntryParams = object({

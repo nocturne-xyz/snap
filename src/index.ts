@@ -37,6 +37,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
+const SPEND_KEY_EOA_DB_KEY = "nocturne_spend_key_eoa";
 
 const config = loadNocturneConfigBuiltin("goerli");
 const kvStore = new SnapKvStore();
@@ -93,9 +94,9 @@ async function handleRpcRequest({
 
   console.log("Switching on method: ", request.method);
   switch (request.method) {
-    case "nocturne_spendKeyIsSet": {
+    case "nocturne_requestSpendKeyEoa": {
       assert(request.params, UndefinedType);
-      return await kvStore.containsKey(SPEND_KEY_DB_KEY);
+      return kvStore.getString(SPEND_KEY_EOA_DB_KEY);
     }
     case "nocturne_setSpendKey": {
       assert(request.params, SetSpendKeyParams);
@@ -117,6 +118,7 @@ async function handleRpcRequest({
         SPEND_KEY_DB_KEY,
         ethers.utils.hexlify(request.params.spendKey)
       );
+      await kvStore.putString(SPEND_KEY_EOA_DB_KEY, request.params.eoaAddress);
 
       return;
     }
