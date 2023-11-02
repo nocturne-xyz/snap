@@ -1,3 +1,4 @@
+import { Panel, divider, heading, panel, text } from "@metamask/snaps-ui";
 import { OperationMetadata } from "@nocturne-xyz/client";
 import { Erc20Config } from "@nocturne-xyz/config";
 import { Address, CanonAddrRegistryEntry } from "@nocturne-xyz/core";
@@ -19,31 +20,43 @@ const lookupTickerByAddress = (
   return addressToTicker.get(address.toLowerCase());
 };
 
+const makeFinalContent = (
+  items: { heading: string; messages: string[] }[]
+): Panel => {
+  const formattedItems = items.flatMap((item) => {
+    return [
+      heading(item.heading),
+      divider(),
+      ...item.messages.map((m) => {
+        const safeText = m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""); // Strip newlines and carriage returns to avoid injected malicious formatting
+        return text(safeText);
+      }),
+    ];
+  });
+  return panel(formattedItems);
+};
+
 export const makeSignCanonAddrRegistryEntryContent = (
   entry: CanonAddrRegistryEntry,
   chainId: bigint,
   registryAddress: Address
-): {
-  heading: string;
-  text: string;
-} => {
+): Panel => {
   const heading = "Confirm signature to register canonical address";
-  const text = `Ethereum Address: ${entry.ethAddress}. Nocturne Canonical Address Nonce: ${entry.perCanonAddrNonce}. Chain id: ${chainId}. Registry address: ${registryAddress}`;
+  const messages = [
+    `Ethereum Address: ${entry.ethAddress}`,
+    `Nocturne Canonical Address Nonce: ${entry.perCanonAddrNonce}`,
+    `Chain id: ${chainId}`,
+    `Registry address: ${registryAddress}`,
+  ];
 
-  return {
-    heading,
-    text: text.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""), // Strip newlines + carriage returns
-  };
+  return makeFinalContent([{ heading, messages }]);
 };
 
 export const makeSignOperationContent = (
   opMetadata: OperationMetadata,
   erc20s: Map<string, Erc20Config>
-): {
-  heading: string;
-  messages: string[];
-}[] => {
-  return opMetadata.items.map((item) => {
+): Panel => {
+  const items = opMetadata.items.map((item) => {
     if (item.type !== "Action")
       throw new Error(`${item.type} snap display not yet supported`);
 
@@ -115,4 +128,5 @@ export const makeSignOperationContent = (
       ),
     };
   });
+  return makeFinalContent(items);
 };

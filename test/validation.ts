@@ -8,28 +8,51 @@ import {
 } from "../src/validation";
 
 it("validates SetSpendKeyParams", () => {
-  const goodData = { spendKey: "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0" };
+  const goodData = {
+    spendKey:
+      "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0",
+    eoaAddress: "0x9dD6B628336ECA9a57e534Fb25F1960fA11038f4",
+  };
   assert(goodData, SetSpendKeyParams);
 
   // wrong field name
-  let badData: any = { spendKEY: goodData.spendKey };
+  let badData: any = {
+    spendKEY: goodData.spendKey,
+    eoaAddress: "0x9dD6B628336ECA9a57e534Fb25F1960fA11038f4",
+  };
 
   // no 0x
-  badData = { spendKey: "123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0" };
+  badData = {
+    spendKey:
+      "123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0",
+    eoaAddress: "0x9dD6B628336ECA9a57e534Fb25F1960fA11038f4",
+  };
   chaiAssert.throws(() => assert(badData, SetSpendKeyParams));
 
   // odd length
-  badData = { spendKey: "0x123456789abcdef0123456789abcdef012345678abcdef0123456789abcdef0" };
+  badData = {
+    spendKey:
+      "0x123456789abcdef0123456789abcdef012345678abcdef0123456789abcdef0",
+    eoaAddress: "0x9dD6B628336ECA9a57e534Fb25F1960fA11038f4",
+  };
   chaiAssert.throws(() => assert(badData, SetSpendKeyParams));
 
   // wrong even length
-  badData = { spendKey: "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde" };
+  badData = {
+    spendKey:
+      "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde",
+    eoaAddress: "0x9dD6B628336ECA9a57e534Fb25F1960fA11038f4",
+  };
 
   // not hex
-  badData = { spendKey: "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdefg" };
+  badData = {
+    spendKey:
+      "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdefg",
+    eoaAddress: "0x9dD6B628336ECA9a57e534Fb25F1960fA11038f4",
+  };
   chaiAssert.throws(() => assert(badData, SetSpendKeyParams));
 
-  // number 
+  // number
   badData = { spendKey: 1234 };
   chaiAssert.throws(() => assert(badData, SetSpendKeyParams));
 

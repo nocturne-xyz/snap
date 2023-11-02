@@ -1,25 +1,24 @@
 import { OnRpcRequestHandler } from "@metamask/snaps-types";
-import { heading, panel, text } from "@metamask/snaps-ui";
+import {
+  RpcRequestMethod,
+  SnapRpcRequestHandlerArgs,
+  assertAllRpcMethodsHandled,
+  parseObjectValues,
+  signOperation,
+} from "@nocturne-xyz/client";
+import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
 import {
   NocturneSigner,
   computeCanonAddrRegistryEntryDigest,
 } from "@nocturne-xyz/core";
-import {
-  SnapRpcRequestHandlerArgs,
-  RpcRequestMethod,
-  parseObjectValues,
-  signOperation,
-  assertAllRpcMethodsHandled,
-} from "@nocturne-xyz/client";
 import * as JSON from "bigint-json-serialization";
 import { ethers } from "ethers";
+import { assert } from "superstruct";
+import { SnapKvStore } from "./snapdb";
 import {
   makeSignCanonAddrRegistryEntryContent,
   makeSignOperationContent,
 } from "./utils/display";
-import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
-import { SnapKvStore } from "./snapdb";
-import { assert } from "superstruct";
 import {
   SetSpendKeyParams,
   SignCanonAddrRegistryEntryParams,
@@ -37,6 +36,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
+const SPEND_KEY_EOA_DB_KEY = "nocturne_spend_key_eoa";
 
 const config = loadNocturneConfigBuiltin("goerli");
 const kvStore = new SnapKvStore();
@@ -93,9 +93,9 @@ async function handleRpcRequest({
 
   console.log("Switching on method: ", request.method);
   switch (request.method) {
-    case "nocturne_spendKeyIsSet": {
+    case "nocturne_requestSpendKeyEoa": {
       assert(request.params, UndefinedType);
-      return await kvStore.containsKey(SPEND_KEY_DB_KEY);
+      return kvStore.getString(SPEND_KEY_EOA_DB_KEY);
     }
     case "nocturne_setSpendKey": {
       assert(request.params, SetSpendKeyParams);
@@ -117,8 +117,9 @@ async function handleRpcRequest({
         SPEND_KEY_DB_KEY,
         ethers.utils.hexlify(request.params.spendKey)
       );
+      await kvStore.putString(SPEND_KEY_EOA_DB_KEY, request.params.eoaAddress);
 
-      return;
+      return undefined;
     }
     case "nocturne_requestViewingKey": {
       assert(request.params, UndefinedType);
@@ -135,13 +136,17 @@ async function handleRpcRequest({
       const signer = await mustGetSigner();
       const { entry, chainId, registryAddress } = request.params;
 
-      const { heading: registryHeading, text: registryText } =
-        makeSignCanonAddrRegistryEntryContent(entry, chainId, registryAddress);
+      const content = makeSignCanonAddrRegistryEntryContent(
+        entry,
+        chainId,
+        registryAddress
+      );
+
       const registryConfirmRes = await snap.request({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content: panel([heading(registryHeading), text(registryText)]),
+          content,
         },
       });
 
@@ -172,19 +177,16 @@ async function handleRpcRequest({
 
       const signer = await mustGetSigner();
       const { op, metadata } = request.params;
-      const contentItems = makeSignOperationContent(
-        // specifies nothing about ordering
+      const content = makeSignOperationContent(
         metadata ?? { items: [] },
         config.erc20s
-      ).flatMap((item) => {
-        return [heading(item.heading), ...item.messages.map((m) => text(m))];
-      });
+      );
       // Confirm spend sig auth
       const opConfirmRes = await snap.request({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content: panel(contentItems),
+          content,
         },
       });
 
