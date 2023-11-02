@@ -1,5 +1,4 @@
 import { OnRpcRequestHandler } from "@metamask/snaps-types";
-import { divider, heading, panel, text } from "@metamask/snaps-ui";
 import {
   RpcRequestMethod,
   SnapRpcRequestHandlerArgs,
@@ -137,17 +136,17 @@ async function handleRpcRequest({
       const signer = await mustGetSigner();
       const { entry, chainId, registryAddress } = request.params;
 
-      const { heading: registryHeading, messages } =
-        makeSignCanonAddrRegistryEntryContent(entry, chainId, registryAddress);
+      const content = makeSignCanonAddrRegistryEntryContent(
+        entry,
+        chainId,
+        registryAddress
+      );
+
       const registryConfirmRes = await snap.request({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content: panel([
-            heading(registryHeading),
-            divider(),
-            ...messages.map((m) => text(m)),
-          ]),
+          content,
         },
       });
 
@@ -178,22 +177,16 @@ async function handleRpcRequest({
 
       const signer = await mustGetSigner();
       const { op, metadata } = request.params;
-      const contentItems = makeSignOperationContent(
+      const content = makeSignOperationContent(
         metadata ?? { items: [] },
         config.erc20s
-      ).flatMap((item) => {
-        return [
-          heading(item.heading),
-          divider(),
-          ...item.messages.map((m) => text(m)),
-        ];
-      });
+      );
       // Confirm spend sig auth
       const opConfirmRes = await snap.request({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content: panel(contentItems),
+          content,
         },
       });
 
