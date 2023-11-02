@@ -9,12 +9,13 @@ const lookupTickerByAddress = (
   address: string,
   erc20s: Map<string, Erc20Config>
 ): string | undefined => {
-  const addressToTicker = Array.from(erc20s.entries()).reduce(
-    (acc: Map<string, string>, [ticker, asset]) =>
-      acc.set(asset.address.toLowerCase(), ticker.toUpperCase()),
-    new Map<string, string>()
-  );
-
+  const addressToTicker = new Map<string, string>();
+  erc20s.forEach((erc20Config, ticker) => {
+    addressToTicker.set(
+      erc20Config.address.toLowerCase(),
+      ticker.toUpperCase()
+    );
+  });
   return addressToTicker.get(address.toLowerCase());
 };
 
