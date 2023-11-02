@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0
+
+### Minor Changes
+
+- d851894: setSpendKey receives and stores corresponding eoa address + remove isSpendKey set and replace with nocturne_requestSpendKeyEoa
+
 ## 0.7.2
 
 ### Patch Changes
