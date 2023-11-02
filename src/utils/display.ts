@@ -1,6 +1,6 @@
+import { OperationMetadata } from "@nocturne-xyz/client";
 import { Erc20Config } from "@nocturne-xyz/config";
 import { Address, CanonAddrRegistryEntry } from "@nocturne-xyz/core";
-import { OperationMetadata } from "@nocturne-xyz/client";
 import { formatUnits } from "ethers/lib/utils";
 
 const NEWLINE_AND_CARRIAGE_RETURN_REGEX = /[\r\n]+/g;
@@ -24,14 +24,19 @@ export const makeSignCanonAddrRegistryEntryContent = (
   registryAddress: Address
 ): {
   heading: string;
-  text: string;
+  messages: string[];
 } => {
   const heading = "Confirm signature to register canonical address";
-  const text = `Ethereum Address: ${entry.ethAddress}. Nocturne Canonical Address Nonce: ${entry.perCanonAddrNonce}. Chain id: ${chainId}. Registry address: ${registryAddress}`;
+  const messages = [
+    `Ethereum Address: ${entry.ethAddress}`,
+    `Nocturne Canonical Address Nonce: ${entry.perCanonAddrNonce}`,
+    `Chain id: ${chainId}`,
+    `Registry address: ${registryAddress}`,
+  ];
 
   return {
     heading,
-    text: text.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""), // Strip newlines + carriage returns
+    messages,
   };
 };
 

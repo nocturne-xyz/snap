@@ -1,5 +1,5 @@
 import { OnRpcRequestHandler } from "@metamask/snaps-types";
-import { heading, panel, text } from "@metamask/snaps-ui";
+import { divider, heading, panel, text } from "@metamask/snaps-ui";
 import {
   RpcRequestMethod,
   SnapRpcRequestHandlerArgs,
@@ -137,13 +137,17 @@ async function handleRpcRequest({
       const signer = await mustGetSigner();
       const { entry, chainId, registryAddress } = request.params;
 
-      const { heading: registryHeading, text: registryText } =
+      const { heading: registryHeading, messages } =
         makeSignCanonAddrRegistryEntryContent(entry, chainId, registryAddress);
       const registryConfirmRes = await snap.request({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content: panel([heading(registryHeading), text(registryText)]),
+          content: panel([
+            heading(registryHeading),
+            divider(),
+            ...messages.map((m) => text(m)),
+          ]),
         },
       });
 
@@ -175,11 +179,14 @@ async function handleRpcRequest({
       const signer = await mustGetSigner();
       const { op, metadata } = request.params;
       const contentItems = makeSignOperationContent(
-        // specifies nothing about ordering
         metadata ?? { items: [] },
         config.erc20s
       ).flatMap((item) => {
-        return [heading(item.heading), ...item.messages.map((m) => text(m))];
+        return [
+          heading(item.heading),
+          divider(),
+          ...item.messages.map((m) => text(m)),
+        ];
       });
       // Confirm spend sig auth
       const opConfirmRes = await snap.request({
