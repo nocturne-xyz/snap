@@ -1,25 +1,25 @@
 import { OnRpcRequestHandler } from "@metamask/snaps-types";
 import { heading, panel, text } from "@metamask/snaps-ui";
 import {
+  RpcRequestMethod,
+  SnapRpcRequestHandlerArgs,
+  assertAllRpcMethodsHandled,
+  parseObjectValues,
+  signOperation,
+} from "@nocturne-xyz/client";
+import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
+import {
   NocturneSigner,
   computeCanonAddrRegistryEntryDigest,
 } from "@nocturne-xyz/core";
-import {
-  SnapRpcRequestHandlerArgs,
-  RpcRequestMethod,
-  parseObjectValues,
-  signOperation,
-  assertAllRpcMethodsHandled,
-} from "@nocturne-xyz/client";
 import * as JSON from "bigint-json-serialization";
 import { ethers } from "ethers";
+import { assert } from "superstruct";
+import { SnapKvStore } from "./snapdb";
 import {
   makeSignCanonAddrRegistryEntryContent,
   makeSignOperationContent,
 } from "./utils/display";
-import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
-import { SnapKvStore } from "./snapdb";
-import { assert } from "superstruct";
 import {
   SetSpendKeyParams,
   SignCanonAddrRegistryEntryParams,
@@ -120,7 +120,7 @@ async function handleRpcRequest({
       );
       await kvStore.putString(SPEND_KEY_EOA_DB_KEY, request.params.eoaAddress);
 
-      return;
+      return undefined;
     }
     case "nocturne_requestViewingKey": {
       assert(request.params, UndefinedType);
