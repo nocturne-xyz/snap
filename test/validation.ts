@@ -224,7 +224,18 @@ it("validates SignOperationParams", () => {
       ],
     },
     metadata: {
-      items: [swapItem],
+      items: [
+        {
+          type: "Action",
+          actionType: "UniswapV3 Swap",
+          tokenIn: "0x1234",
+          inAmount: 1234n,
+          tokenOut: "0x5678",
+          maxSlippageBps: 50,
+          exactQuoteWei: 1234n,
+          minimumAmountOutWei: 1234n,
+        },
+      ],
     },
   };
   const badData = {
