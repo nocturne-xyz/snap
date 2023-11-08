@@ -20,6 +20,13 @@ const lookupTickerByAddress = (
   return addressToTicker.get(address.toLowerCase());
 };
 
+const displayAmount = (amount: string | number): string => {
+  if (typeof amount === "string") amount = parseFloat(amount);
+  if (amount >= 1) return amount.toFixed(2);
+  if (amount >= 0.01) return amount.toFixed(4);
+  return parseFloat(amount.toFixed(5)).toString(); // Removes trailing zeros
+};
+
 const makeFinalContent = (
   items: { heading: string; messages: string[] }[]
 ): Panel => {
@@ -94,24 +101,43 @@ export const makeSignOperationContent = (
         break;
       }
       case "UniswapV3 Swap": {
-        const { tokenIn, inAmount: amountSmallestUnits, tokenOut } = item;
+        const {
+          tokenIn,
+          inAmount: amountSmallestUnits,
+          tokenOut,
+          maxSlippageBps,
+          exactQuoteWei,
+          minimumAmountOutWei,
+        } = item;
         const tickerIn = lookupTickerByAddress(tokenIn, erc20s);
         const tickerOut = lookupTickerByAddress(tokenOut, erc20s);
-        const displayAmountIn = formatUnits(amountSmallestUnits);
+        const displayAmountIn = displayAmount(formatUnits(amountSmallestUnits));
+        const displayExactQuote = displayAmount(formatUnits(exactQuoteWei));
+        const displayMinimumAmountOut = displayAmount(
+          formatUnits(minimumAmountOutWei)
+        );
+        const displaySlippage = displayAmount(maxSlippageBps / 100);
         heading = "Confirm token swap";
 
         if (tickerIn && tickerOut) {
           messages.push(
-            `Action: Swap **${displayAmountIn} ${tickerIn}** for **${tickerOut}**`
+            `Action: Swap **${displayAmountIn} ${tickerIn}** for ≈**${displayExactQuote} ${tickerOut}**`
           );
         } else {
           messages.push(
             "Action: Swap",
-            `Amount: **${displayAmountIn}**`,
             `From token: **${tickerIn ?? displayUnrecognizedAsset(tokenIn)}**`,
-            `To token: **${tickerOut ?? displayUnrecognizedAsset(tokenOut)}**`
+            `Amount: **${displayAmountIn}**`,
+            `To token: **${tickerOut ?? displayUnrecognizedAsset(tokenOut)}**`,
+            `Amount: ~**${displayExactQuote}**`
           );
         }
+        messages.push(
+          `Max slippage: ${displaySlippage}%`,
+          `Minimum amount out: ${displayMinimumAmountOut} ${
+            tickerOut ?? displayUnrecognizedAsset(tokenOut)
+          }`
+        );
         break;
       }
       default:
