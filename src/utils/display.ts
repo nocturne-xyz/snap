@@ -41,7 +41,7 @@ export const makeSignCanonAddrRegistryEntryContent = (
 ): Panel => {
   const heading = "Confirm signature to register canonical address";
   const messages = [
-    `Registering your canonical address provisions your account with an address with which you
+    `Registering your canonical address gives your Ethereum account an address with which you
       receive private payments.`,
     `Your connected Ethereum address: **${entry.ethAddress}**`,
   ];
