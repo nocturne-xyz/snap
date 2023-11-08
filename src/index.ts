@@ -136,11 +136,7 @@ async function handleRpcRequest({
       const signer = await mustGetSigner();
       const { entry, chainId, registryAddress } = request.params;
 
-      const content = makeSignCanonAddrRegistryEntryContent(
-        entry,
-        chainId,
-        registryAddress
-      );
+      const content = makeSignCanonAddrRegistryEntryContent(entry);
 
       const registryConfirmRes = await snap.request({
         method: "snap_dialog",
