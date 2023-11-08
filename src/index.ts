@@ -45,8 +45,6 @@ const configThunk = thunk(async () => {
     (await ethereum.request({ method: "eth_chainId" })) as string,
     16
   );
-  console.log({ ethereum });
-  console.log({ chainId });
   if (!chainId) {
     throw new Error("Could not get chainId from ethereum provider");
   }
