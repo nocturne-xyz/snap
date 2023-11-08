@@ -10,6 +10,7 @@ import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
 import {
   NocturneSigner,
   computeCanonAddrRegistryEntryDigest,
+  thunk,
 } from "@nocturne-xyz/core";
 import * as JSON from "bigint-json-serialization";
 import { ethers } from "ethers";
@@ -33,12 +34,31 @@ const ALLOWED_ORIGINS = [
   "http://localhost:4001",
   "https://veil.nocturnelabs.xyz",
   "https://app.nocturnelabs.xyz",
+  "https://app.nocturne.xyz",
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
 const SPEND_KEY_EOA_DB_KEY = "nocturne_spend_key_eoa";
 
-const config = loadNocturneConfigBuiltin("goerli");
+const configThunk = thunk(async () => {
+  const chainId = parseInt(
+    (await ethereum.request({ method: "eth_chainId" })) as string,
+    16
+  );
+  console.log({ ethereum });
+  console.log({ chainId });
+  if (!chainId) {
+    throw new Error("Could not get chainId from ethereum provider");
+  }
+  switch (chainId) {
+    case 1:
+      return loadNocturneConfigBuiltin("mainnet");
+    case 5:
+      return loadNocturneConfigBuiltin("goerli");
+    default:
+      return loadNocturneConfigBuiltin("localhost");
+  }
+});
 const kvStore = new SnapKvStore();
 
 async function getNocturneSignerFromDb(): Promise<NocturneSigner | undefined> {
@@ -179,7 +199,7 @@ async function handleRpcRequest({
       const { op, metadata } = request.params;
       const content = makeSignOperationContent(
         metadata ?? { items: [] },
-        config.erc20s
+        (await configThunk()).erc20s
       );
       // Confirm spend sig auth
       const opConfirmRes = await snap.request({
