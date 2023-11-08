@@ -1,5 +1,5 @@
-import { it } from "mocha";
 import { assert as chaiAssert } from "chai";
+import { it } from "mocha";
 import { assert } from "superstruct";
 import {
   SetSpendKeyParams,
@@ -231,6 +231,9 @@ it("validates SignOperationParams", () => {
           tokenIn: "0x1234",
           inAmount: 1234n,
           tokenOut: "0x5678",
+          maxSlippageBps: 50,
+          exactQuoteWei: 1234n,
+          minimumAmountOutWei: 1234n,
         },
       ],
     },

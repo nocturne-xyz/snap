@@ -1,14 +1,14 @@
 import {
-  string,
-  bigint,
-  number,
   array,
+  bigint,
   boolean,
-  enums,
-  union,
   define,
+  enums,
+  number,
   object,
   optional,
+  string,
+  union,
 } from "superstruct";
 
 export const UndefinedType = define(
@@ -178,6 +178,9 @@ const UniswapV3SwapActionMetadataType = object({
   tokenIn: string(),
   inAmount: bigint(),
   tokenOut: string(),
+  maxSlippageBps: number(),
+  exactQuoteWei: bigint(),
+  minimumAmountOutWei: bigint(),
 });
 
 const ActionMetadataType = union([
