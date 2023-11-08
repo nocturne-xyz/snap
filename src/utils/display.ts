@@ -37,16 +37,13 @@ const makeFinalContent = (
 };
 
 export const makeSignCanonAddrRegistryEntryContent = (
-  entry: CanonAddrRegistryEntry,
-  chainId: bigint,
-  registryAddress: Address
+  entry: CanonAddrRegistryEntry
 ): Panel => {
   const heading = "Confirm signature to register canonical address";
   const messages = [
-    `Ethereum Address: ${entry.ethAddress}`,
-    `Nocturne Canonical Address Nonce: ${entry.perCanonAddrNonce}`,
-    `Chain id: ${chainId}`,
-    `Registry address: ${registryAddress}`,
+    `Registering your canonical address provisions your account with an address with which you
+      receive private payments.`,
+    `Your connected Ethereum address: **${entry.ethAddress}**`,
   ];
 
   return makeFinalContent([{ heading, messages }]);
