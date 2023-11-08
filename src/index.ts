@@ -34,7 +34,6 @@ const ALLOWED_ORIGINS = [
   "http://localhost:4001",
   "https://veil.nocturnelabs.xyz",
   "https://app.nocturnelabs.xyz",
-  "https://app.nocturne.xyz",
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
