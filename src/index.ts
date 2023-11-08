@@ -52,8 +52,10 @@ const configThunk = thunk(async () => {
       return loadNocturneConfigBuiltin("mainnet");
     case 5:
       return loadNocturneConfigBuiltin("goerli");
-    default:
+    case 31_337:
       return loadNocturneConfigBuiltin("localhost");
+    default:
+      throw new Error(`ChainId ${chainId} not supported`);
   }
 });
 const kvStore = new SnapKvStore();
