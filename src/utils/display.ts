@@ -20,8 +20,8 @@ const lookupTickerByAddress = (
   return addressToTicker.get(address.toLowerCase());
 };
 
-const displayAmount = (_amount: string): string => {
-  const amount = parseFloat(_amount);
+const displayAmount = (amount: string | number): string => {
+  if (typeof amount === "string") amount = parseFloat(amount);
   if (amount >= 1) return amount.toFixed(2);
   if (amount >= 0.01) return amount.toFixed(4);
   return parseFloat(amount.toFixed(5)).toString(); // Removes trailing zeros
@@ -119,6 +119,7 @@ export const makeSignOperationContent = (
         const displayMinimumAmountOut = displayAmount(
           formatUnits(minimumAmountOutWei)
         );
+        const displaySlippage = displayAmount(maxSlippageBps / 100);
         heading = "Confirm token swap";
 
         if (tickerIn && tickerOut) {
@@ -135,7 +136,7 @@ export const makeSignOperationContent = (
           );
         }
         messages.push(
-          `Max slippage: ${maxSlippageBps / 100}%`,
+          `Max slippage: ${displaySlippage}%`,
           `Minimum amount out: ${displayMinimumAmountOut} ${
             tickerOut ?? displayUnrecognizedAsset(tokenOut)
           }`
