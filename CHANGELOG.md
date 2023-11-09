@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0
+
+### Minor Changes
+
+- 30610d5: Refactors config to be based on ethereum provider chainid
+- 489f826: Adds extra metadata for Uniswap V3 Swap ops
+
+### Patch Changes
+
+- 140fd8a: Update canon addr message text
+
 ## 0.8.0
 
 ### Minor Changes
