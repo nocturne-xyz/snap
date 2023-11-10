@@ -197,7 +197,7 @@ async function handleRpcRequest({
         metadata ?? { items: [] },
         (await configThunk()).erc20s,
         AssetTrait.decode(op.encodedGasAsset).assetAddr,
-        op.gasEstimate
+        op.gasFeeEstimate
       );
       // Confirm spend sig auth
       const opConfirmRes = await snap.request({
