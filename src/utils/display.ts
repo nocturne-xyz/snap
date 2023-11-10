@@ -189,7 +189,7 @@ export const makeSignOperationContent = (
   }
 
   gasItemMessages.push(
-    "Note: This fee is an estimate of how much your transaction will cost. The exact cost will be paid from your Nocturne account to the bundler that relays it, and any excess will be refunded back to your Nocturne account."
+    "Note: This fee is an estimate. Any excess will be refunded back to your Nocturne account."
   );
 
   const gasItem = {
