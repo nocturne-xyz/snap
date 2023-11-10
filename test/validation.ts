@@ -222,6 +222,7 @@ it("validates SignOperationParams", () => {
           },
         },
       ],
+      gasEstimate: 1n,
     },
     metadata: {
       items: [
@@ -234,7 +235,6 @@ it("validates SignOperationParams", () => {
           maxSlippageBps: 50,
           exactQuoteWei: 1234n,
           minimumAmountOutWei: 1234n,
-          gasFeeEstimate: 1n,
         },
       ],
     },

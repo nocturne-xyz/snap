@@ -182,7 +182,6 @@ const UniswapV3SwapActionMetadataType = object({
   maxSlippageBps: number(),
   exactQuoteWei: bigint(),
   minimumAmountOutWei: bigint(),
-  gasFeeEstimate: bigint(),
 });
 
 const ActionMetadataType = union([
