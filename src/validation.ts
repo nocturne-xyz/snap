@@ -13,7 +13,7 @@ import {
 
 export const UndefinedType = define(
   "Undefined",
-  (value) => value === undefined,
+  (value) => value === undefined
 );
 
 const isDataHexString32 = (value: any) =>
