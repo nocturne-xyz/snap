@@ -73,7 +73,7 @@ export const makeSignOperationContent = (
   fee: bigint
 ): Panel => {
   const headItem = {
-    heading: "Confirm transaction from your Nocturne Account".replace(
+    heading: "Confirm transaction from our Nocturne account".replace(
       NEWLINE_AND_CARRIAGE_RETURN_REGEX,
       ""
     ),
@@ -99,7 +99,7 @@ export const makeSignOperationContent = (
         const ticker = lookupTickerByAddress(erc20Address, erc20s);
         const displayAmount = formatUnits(amountSmallestUnits);
 
-        heading = "ERC-20 Transfer";
+        heading = "ERC-20 transfer";
         messages.push(
           "Action: Transfer",
           `Amount: **${displayAmount}**`,
@@ -113,7 +113,7 @@ export const makeSignOperationContent = (
       case "Transfer ETH": {
         const { recipientAddress, amount: amountSmallestUnits } = item;
         const displayAmountEth = formatUnits(amountSmallestUnits);
-        heading = "ETH Transfer";
+        heading = "ETH transfer";
         messages.push(
           `Action: Send **${displayAmountEth} ETH**`,
           `Recipient Address: ${recipientAddress}`
@@ -172,19 +172,19 @@ export const makeSignOperationContent = (
     };
   });
 
-  const gasItemHeader = "Gas Compensation";
+  const gasItemHeader = "Gas compensation";
   const gasItemMessages = [];
   const gasAssetTicker = lookupTickerByAddress(gasAssetContractAddr, erc20s);
   if (!gasAssetTicker) {
     gasItemMessages.push(
-      `Gas Fee: **${formatUnits(
+      `Gas fee: **${formatUnits(
         fee
       )} of unrecognized token (${gasAssetContractAddr})**`
     );
   } else {
     const decimals = erc20s.get(gasAssetTicker)!.precision;
     gasItemMessages.push(
-      `Gas Fee: **${formatUnits(fee, decimals)} ${gasAssetTicker}**`
+      `Gas fee: **${formatUnits(fee, decimals)} ${gasAssetTicker}**`
     );
   }
 
