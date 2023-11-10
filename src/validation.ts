@@ -142,6 +142,7 @@ const PreSignOperationType = object({
   deadline: bigint(),
   atomicActions: boolean(),
   joinSplits: array(PreSignJoinSplitType),
+  gasEstimate: bigint(),
 });
 
 const ConfidentialPaymentMetadataType = object({

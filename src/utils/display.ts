@@ -30,10 +30,20 @@ const displayAmount = (amount: string | number): string => {
 const makeFinalContent = (
   items: { heading: string; messages: string[] }[]
 ): Panel => {
-  const formattedItems = items.flatMap((item) => {
+  const formattedItems = items.flatMap((item, i) => {
+    if (i === 0) {
+      return [
+        heading(item.heading),
+        ...item.messages.map((m) => {
+          const safeText = m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""); // Strip newlines and carriage returns to avoid injected malicious formatting
+          return text(safeText);
+        }),
+      ];
+    }
+
     return [
-      heading(item.heading),
       divider(),
+      heading(item.heading),
       ...item.messages.map((m) => {
         const safeText = m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""); // Strip newlines and carriage returns to avoid injected malicious formatting
         return text(safeText);
@@ -60,11 +70,13 @@ export const makeSignOperationContent = (
   opMetadata: OperationMetadata,
   erc20s: Map<string, Erc20Config>,
   gasAssetContractAddr: Address,
-  fee: bigint,
+  fee: bigint
 ): Panel => {
-
-  const headItem = { 
-    heading: "Confirm transaction from your Nocturne Account".replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""),
+  const headItem = {
+    heading: "Confirm transaction from your Nocturne Account".replace(
+      NEWLINE_AND_CARRIAGE_RETURN_REGEX,
+      ""
+    ),
     messages: [],
   };
 
@@ -165,11 +177,14 @@ export const makeSignOperationContent = (
   const gasAssetTicker = lookupTickerByAddress(gasAssetContractAddr, erc20s);
   if (!gasAssetTicker) {
     gasItemMessages.push(
-      `Gas Fee: **${formatUnits(fee)} of unrecognized token (${gasAssetContractAddr})**`
+      `Gas Fee: **${formatUnits(
+        fee
+      )} of unrecognized token (${gasAssetContractAddr})**`
     );
   } else {
+    const decimals = erc20s.get(gasAssetTicker)!.precision;
     gasItemMessages.push(
-      `Gas Fee: **${formatUnits(fee)} ${gasAssetTicker}**`
+      `Gas Fee: **${formatUnits(fee, decimals)} ${gasAssetTicker}**`
     );
   }
 
@@ -179,9 +194,10 @@ export const makeSignOperationContent = (
 
   const gasItem = {
     heading: gasItemHeader,
-    messages: gasItemMessages.map(m => m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, "")),
+    messages: gasItemMessages.map((m) =>
+      m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, "")
+    ),
   };
-
 
   return makeFinalContent([headItem, ...actionItems, gasItem]);
 };

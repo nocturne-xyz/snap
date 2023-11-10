@@ -2770,48 +2770,48 @@ __metadata:
   linkType: hard
 
 "@nocturne-xyz/client@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@nocturne-xyz/client@npm:3.1.0"
+  version: 3.1.2
+  resolution: "@nocturne-xyz/client@npm:3.1.2"
   dependencies:
-    "@nocturne-xyz/config": ^1.5.0
-    "@nocturne-xyz/contracts": ^2.0.1
-    "@nocturne-xyz/core": ^3.1.1
+    "@nocturne-xyz/config": ^1.6.0
+    "@nocturne-xyz/contracts": ^3.0.0
+    "@nocturne-xyz/core": ^3.1.2
     "@nocturne-xyz/crypto": ^0.3.0
     async-mutex: ^0.4.0
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
     js-sha256: ^0.9.0
-  checksum: 081f1c3a9488970252a63d7d5712ee464c40ea81588652546f85b689618ef05a24afe1a479182f573c263ec0e8652d96029659dfbd3554b22e3917190b8c6ca4
+  checksum: 66b936d4b469d89fbf4e81487cbb673020f444cf1960946dfa79e1f2a79fdc20013f36810e396facf8b71cbf269e68f1e83d3ef02bd7852776071b14a33fe534
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/config@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "@nocturne-xyz/config@npm:1.5.0"
+"@nocturne-xyz/config@npm:^1.5.0, @nocturne-xyz/config@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@nocturne-xyz/config@npm:1.6.0"
   dependencies:
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
-  checksum: 58da3e1b372765c2a47e07486744e052548352488de9df24992b794756cb86b4cd58ee6c1e9e146431f1e3a33bbb5a83ad056d37d8e7ccb78b1e489133103198
+  checksum: 735997ae13f106b4aefb30df9564ead7ebd6292185b7740c516843441c14075eb2aa59f2bc3d79185ec994955e57f21ae5e4639c0e57aac75365a11fd1a9ffce
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/contracts@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@nocturne-xyz/contracts@npm:2.0.1"
+"@nocturne-xyz/contracts@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@nocturne-xyz/contracts@npm:3.0.0"
   dependencies:
     "@openzeppelin/contracts": 4.9.2
     "@openzeppelin/contracts-upgradeable": 4.9.2
-  checksum: 7021031cf7e0f4af76f95b450c128ebf84a1a6b759c82198d9c0fe4fa486564644fb33839aca751e5ae577a5c33fc1a0e51867ecb3b05e600029e2a24346572d
+  checksum: 9f8d519a020f27ad4af0090d863c0c9c51125348aa51302a4dd4443fd173afd7cd089aaab18e5618a01fa907f92883dc657665e62d4d9e56217a079f43649c26
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/core@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@nocturne-xyz/core@npm:3.1.1"
+"@nocturne-xyz/core@npm:^3.1.1, @nocturne-xyz/core@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@nocturne-xyz/core@npm:3.1.2"
   dependencies:
-    "@nocturne-xyz/contracts": ^2.0.1
+    "@nocturne-xyz/contracts": ^3.0.0
     "@nocturne-xyz/crypto": ^0.3.0
     "@zk-kit/incremental-merkle-tree": ^1.0.0
     async-mutex: ^0.4.0
@@ -2822,7 +2822,7 @@ __metadata:
     js-sha256: ^0.9.0
     sorted-btree: ^1.8.1
     winston: ^3.9.0
-  checksum: d12a1a817002f67209438fa90c2502404651184709fc349a26bef8b7a94fa5447a6bd2c091c6a08060deed6a4317859a5e0cd2ef5374da0eb37e9081fe04e5a1
+  checksum: 47891973e2a73f7247dc4673f20d8eb8ae0300e02082f48de61039f2b74ef2c1d2e5d32c7be0ff3040dbcc0a22a829080ad6138328672408971f9fcd4143b4ee
   languageName: node
   linkType: hard
 
