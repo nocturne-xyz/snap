@@ -31,23 +31,13 @@ const makeFinalContent = (
   items: { heading: string; messages: string[] }[]
 ): Panel => {
   const formattedItems = items.flatMap((item, i) => {
-    if (i === 0) {
-      return [
-        heading(item.heading),
-        ...item.messages.map((m) => {
-          const safeText = m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""); // Strip newlines and carriage returns to avoid injected malicious formatting
-          return text(safeText);
-        }),
-      ];
-    }
-
     return [
-      divider(),
+      ...(i > 0 ? [divider()] : []),
       heading(item.heading),
       ...item.messages.map((m) => {
         const safeText = m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""); // Strip newlines and carriage returns to avoid injected malicious formatting
         return text(safeText);
-      }),
+      })
     ];
   });
   return panel(formattedItems);
@@ -60,7 +50,7 @@ export const makeSignCanonAddrRegistryEntryContent = (
   const messages = [
     `Registering your canonical address gives your Ethereum account an address with which you
       receive private payments.`,
-    `Your connected Ethereum address: **${entry.ethAddress}**`,
+    `Your connected Ethereum address: **${entry.ethAddress}**`
   ];
 
   return makeFinalContent([{ heading, messages }]);
@@ -73,11 +63,11 @@ export const makeSignOperationContent = (
   fee: bigint
 ): Panel => {
   const headItem = {
-    heading: "Confirm transaction from our Nocturne account".replace(
+    heading: "Confirm transaction from your Nocturne account".replace(
       NEWLINE_AND_CARRIAGE_RETURN_REGEX,
       ""
     ),
-    messages: [],
+    messages: []
   };
 
   const actionItems = opMetadata.items.map((item) => {
@@ -94,7 +84,7 @@ export const makeSignOperationContent = (
         const {
           amount: amountSmallestUnits,
           recipientAddress,
-          erc20Address,
+          erc20Address
         } = item;
         const ticker = lookupTickerByAddress(erc20Address, erc20s);
         const displayAmount = formatUnits(amountSmallestUnits);
@@ -127,7 +117,7 @@ export const makeSignOperationContent = (
           tokenOut,
           maxSlippageBps,
           exactQuoteWei,
-          minimumAmountOutWei,
+          minimumAmountOutWei
         } = item;
         const tickerIn = lookupTickerByAddress(tokenIn, erc20s);
         const tickerOut = lookupTickerByAddress(tokenOut, erc20s);
@@ -168,7 +158,7 @@ export const makeSignOperationContent = (
       heading,
       messages: messages.map(
         (m) => m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, "") // Strip newlines and carriage returns
-      ),
+      )
     };
   });
 
@@ -196,7 +186,7 @@ export const makeSignOperationContent = (
     heading: gasItemHeader,
     messages: gasItemMessages.map((m) =>
       m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, "")
-    ),
+    )
   };
 
   return makeFinalContent([headItem, ...actionItems, gasItem]);

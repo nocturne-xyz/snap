@@ -13,7 +13,7 @@ import {
 
 export const UndefinedType = define(
   "Undefined",
-  (value) => value === undefined
+  (value) => value === undefined,
 );
 
 const isDataHexString32 = (value: any) =>
@@ -182,6 +182,7 @@ const UniswapV3SwapActionMetadataType = object({
   maxSlippageBps: number(),
   exactQuoteWei: bigint(),
   minimumAmountOutWei: bigint(),
+  gasFeeEstimate: bigint(),
 });
 
 const ActionMetadataType = union([
