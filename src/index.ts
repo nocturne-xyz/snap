@@ -8,6 +8,7 @@ import {
 } from "@nocturne-xyz/client";
 import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
 import {
+  AssetTrait,
   NocturneSigner,
   computeCanonAddrRegistryEntryDigest,
   thunk,
@@ -194,7 +195,9 @@ async function handleRpcRequest({
       const { op, metadata } = request.params;
       const content = makeSignOperationContent(
         metadata ?? { items: [] },
-        (await configThunk()).erc20s
+        (await configThunk()).erc20s,
+        AssetTrait.decode(op.encodedGasAsset).assetAddr,
+        op.gasFeeEstimate
       );
       // Confirm spend sig auth
       const opConfirmRes = await snap.request({

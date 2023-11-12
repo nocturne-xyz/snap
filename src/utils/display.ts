@@ -30,10 +30,10 @@ const displayAmount = (amount: string | number): string => {
 const makeFinalContent = (
   items: { heading: string; messages: string[] }[]
 ): Panel => {
-  const formattedItems = items.flatMap((item) => {
+  const formattedItems = items.flatMap((item, i) => {
     return [
+      ...(i > 0 ? [divider()] : []),
       heading(item.heading),
-      divider(),
       ...item.messages.map((m) => {
         const safeText = m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, ""); // Strip newlines and carriage returns to avoid injected malicious formatting
         return text(safeText);
@@ -58,9 +58,19 @@ export const makeSignCanonAddrRegistryEntryContent = (
 
 export const makeSignOperationContent = (
   opMetadata: OperationMetadata,
-  erc20s: Map<string, Erc20Config>
+  erc20s: Map<string, Erc20Config>,
+  gasAssetContractAddr: Address,
+  fee: bigint
 ): Panel => {
-  const items = opMetadata.items.map((item) => {
+  const headItem = {
+    heading: "Confirm transaction from your Nocturne account".replace(
+      NEWLINE_AND_CARRIAGE_RETURN_REGEX,
+      ""
+    ),
+    messages: [],
+  };
+
+  const actionItems = opMetadata.items.map((item) => {
     if (item.type !== "Action")
       throw new Error(`${item.type} snap display not yet supported`);
 
@@ -79,7 +89,7 @@ export const makeSignOperationContent = (
         const ticker = lookupTickerByAddress(erc20Address, erc20s);
         const displayAmount = formatUnits(amountSmallestUnits);
 
-        heading = "Confirm transfer from your Nocturne account";
+        heading = "ERC-20 Transfer";
         messages.push(
           "Action: Transfer",
           `Amount: **${displayAmount}**`,
@@ -93,7 +103,7 @@ export const makeSignOperationContent = (
       case "Transfer ETH": {
         const { recipientAddress, amount: amountSmallestUnits } = item;
         const displayAmountEth = formatUnits(amountSmallestUnits);
-        heading = "Confirm transfer from your Nocturne account";
+        heading = "ETH Transfer";
         messages.push(
           `Action: Send **${displayAmountEth} ETH**`,
           `Recipient Address: ${recipientAddress}`
@@ -117,7 +127,7 @@ export const makeSignOperationContent = (
           formatUnits(minimumAmountOutWei)
         );
         const displaySlippage = displayAmount(maxSlippageBps / 100);
-        heading = "Confirm token swap";
+        heading = "Token swap";
 
         if (tickerIn && tickerOut) {
           messages.push(
@@ -151,5 +161,33 @@ export const makeSignOperationContent = (
       ),
     };
   });
-  return makeFinalContent(items);
+
+  const gasItemHeader = "Gas Compensation";
+  const gasItemMessages = [];
+  const gasAssetTicker = lookupTickerByAddress(gasAssetContractAddr, erc20s);
+  if (!gasAssetTicker) {
+    gasItemMessages.push(
+      `Gas Fee: **${formatUnits(
+        fee
+      )} of unrecognized token (${gasAssetContractAddr})**`
+    );
+  } else {
+    const decimals = erc20s.get(gasAssetTicker)!.precision;
+    gasItemMessages.push(
+      `Gas Fee: **${formatUnits(fee, decimals)} ${gasAssetTicker}**`
+    );
+  }
+
+  gasItemMessages.push(
+    "Note: This fee is an estimate. Any excess will be refunded back to your Nocturne account."
+  );
+
+  const gasItem = {
+    heading: gasItemHeader,
+    messages: gasItemMessages.map((m) =>
+      m.replace(NEWLINE_AND_CARRIAGE_RETURN_REGEX, "")
+    ),
+  };
+
+  return makeFinalContent([headItem, ...actionItems, gasItem]);
 };
