@@ -222,7 +222,7 @@ it("validates SignOperationParams", () => {
           },
         },
       ],
-      gasEstimate: 1n,
+      gasFeeEstimate: 1n,
     },
     metadata: {
       items: [
