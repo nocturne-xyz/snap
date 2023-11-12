@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0-beta.0
+
+### Minor Changes
+
+- c6385c2: display gas estimate to user
+
 ## 0.9.0
 
 ### Minor Changes

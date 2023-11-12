@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@nocturne-xyz/snap": "0.9.0"
+  },
+  "changesets": [
+    "moody-adults-sip"
+  ]
+}
