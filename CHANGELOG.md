@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.10.1
+
+### Patch Changes
+
+- b911ac9: update allowed origins
+
+## 0.10.0
+
+### Minor Changes
+
+- 56b5049: display gas estimate to user
+
 ## 0.10.0-beta.0
 
 ### Minor Changes
