@@ -35,7 +35,6 @@ const ALLOWED_ORIGINS = [
   "https://veil.nocturnelabs.xyz",
   "https://goerli.nocturnelabs.xyz",
   "https://app.nocturnelabs.xyz",
-  "https://sandbox.nocturnelabs.xyz",
   "https://goerli.nocturne.xyz",
   "https://app.nocturne.xyz",
   "https://sandbox.nocturne.xyz",
