@@ -1,9 +1,9 @@
 {
-  "version": "0.10.1",
-  "description": "Transact privately on-chain via the Nocturne protocol.",
+  "version": "0.10.2",
+  "description": "Transact privately onchain via the Nocturne protocol.",
   "proposedName": "Nocturne",
   "source": {
-    "shasum": "RXGKQZPvZnTcJjo1dU29WlJGmkbkCL2LFjJWOU2VDkw=",
+    "shasum": "YUFXReZ8R1PVmvcvSQls9ycZK0dDhbp/v9zEnKxrfbs=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
