@@ -32,9 +32,13 @@ import {
 // Goerli
 
 const ALLOWED_ORIGINS = [
-  "http://localhost:4001",
   "https://veil.nocturnelabs.xyz",
+  "https://goerli.nocturnelabs.xyz",
   "https://app.nocturnelabs.xyz",
+  "https://sandbox.nocturnelabs.xyz",
+  "https://goerli.nocturne.xyz",
+  "https://app.nocturne.xyz",
+  "https://sandbox.nocturne.xyz",
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
