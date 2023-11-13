@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2
+
+### Patch Changes
+
+- 15a583d: update icon.svg + name and description
+
 ## 0.10.1
 
 ### Patch Changes
