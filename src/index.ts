@@ -56,13 +56,7 @@ const SPEND_KEY_DB_KEY = "nocturne_spend_key";
 const SPEND_KEY_EOA_DB_KEY = "nocturne_spend_key_eoa";
 
 const configThunk = thunk(async () => {
-  const chainId = parseInt(
-    (await ethereum.request({ method: "eth_chainId" })) as string,
-    16
-  );
-  if (!chainId) {
-    throw new Error("Could not get chainId from ethereum provider");
-  }
+  const chainId = await getChainId();
   switch (chainId) {
     case 1:
       return loadNocturneConfigBuiltin("mainnet");
