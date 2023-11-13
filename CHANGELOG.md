@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1
+
+### Patch Changes
+
+- b911ac9: update allowed origins
+
 ## 0.10.0
 
 ### Minor Changes
