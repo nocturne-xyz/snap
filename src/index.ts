@@ -42,7 +42,6 @@ const getChainId = async () => {
 const getAllowedOrigins = async () => {
   const ALLOWED_ORIGINS = [
     "https://veil.nocturnelabs.xyz",
-    "https://goerli.nocturnelabs.xyz",
     "https://goerli.nocturne.xyz",
     "https://app.nocturne.xyz",
     "https://sandbox.nocturne.xyz"
