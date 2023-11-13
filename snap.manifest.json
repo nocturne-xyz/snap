@@ -1,7 +1,7 @@
 {
   "version": "0.10.1",
-  "description": "Nocturne Snap",
-  "proposedName": "Nocturne Snap",
+  "description": "Transact privately onchain via the Nocturne protocol.",
+  "proposedName": "Nocturne",
   "source": {
     "shasum": "RXGKQZPvZnTcJjo1dU29WlJGmkbkCL2LFjJWOU2VDkw=",
     "location": {
