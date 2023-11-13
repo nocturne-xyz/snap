@@ -4,14 +4,14 @@ import {
   SnapRpcRequestHandlerArgs,
   assertAllRpcMethodsHandled,
   parseObjectValues,
-  signOperation,
+  signOperation
 } from "@nocturne-xyz/client";
 import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
 import {
   AssetTrait,
   NocturneSigner,
   computeCanonAddrRegistryEntryDigest,
-  thunk,
+  thunk
 } from "@nocturne-xyz/core";
 import * as JSON from "bigint-json-serialization";
 import { ethers } from "ethers";
@@ -19,27 +19,39 @@ import { assert } from "superstruct";
 import { SnapKvStore } from "./snapdb";
 import {
   makeSignCanonAddrRegistryEntryContent,
-  makeSignOperationContent,
+  makeSignOperationContent
 } from "./utils/display";
 import {
   SetSpendKeyParams,
   SignCanonAddrRegistryEntryParams,
   SignOperationParams,
-  UndefinedType,
+  UndefinedType
 } from "./validation";
 
-// To build locally, invoke `yarn build:local` from snap directory
-// Goerli
-
-const ALLOWED_ORIGINS = [
-  "https://veil.nocturnelabs.xyz",
-  "https://goerli.nocturnelabs.xyz",
-  "https://app.nocturnelabs.xyz",
-  "https://goerli.nocturne.xyz",
-  "https://app.nocturne.xyz",
-  "https://sandbox.nocturne.xyz",
-];
-
+const LOCALNET_CHAINID = 31_337;
+const getChainId = async () => {
+  const chainId = parseInt(
+    (await ethereum.request({ method: "eth_chainId" })) as string,
+    16
+  );
+  if (!chainId) {
+    throw new Error("Could not get chainId from ethereum provider");
+  }
+  return chainId;
+};
+const getAllowedOrigins = async () => {
+  const ALLOWED_ORIGINS = [
+    "https://veil.nocturnelabs.xyz",
+    "https://goerli.nocturnelabs.xyz",
+    "https://goerli.nocturne.xyz",
+    "https://app.nocturne.xyz",
+    "https://sandbox.nocturne.xyz"
+  ];
+  if ((await getChainId()) === LOCALNET_CHAINID) {
+    ALLOWED_ORIGINS.push("http://localhost:4001");
+  }
+  return ALLOWED_ORIGINS;
+};
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
 const SPEND_KEY_EOA_DB_KEY = "nocturne_spend_key_eoa";
 
@@ -56,7 +68,7 @@ const configThunk = thunk(async () => {
       return loadNocturneConfigBuiltin("mainnet");
     case 5:
       return loadNocturneConfigBuiltin("goerli");
-    case 31_337:
+    case LOCALNET_CHAINID:
       return loadNocturneConfigBuiltin("localhost");
     default:
       throw new Error(`ChainId ${chainId} not supported`);
@@ -107,7 +119,7 @@ export const onRpcRequest: OnRpcRequestHandler = async (args) => {
 
 async function handleRpcRequest({
   origin,
-  request,
+  request
 }: SnapRpcRequestHandlerArgs): Promise<RpcRequestMethod["return"]> {
   //@ts-ignore
   request.params = request.params
@@ -123,7 +135,7 @@ async function handleRpcRequest({
     case "nocturne_setSpendKey": {
       assert(request.params, SetSpendKeyParams);
 
-      if (!ALLOWED_ORIGINS.includes(origin)) {
+      if (!(await getAllowedOrigins()).includes(origin)) {
         throw new Error(
           `Non-allowed origin cannot set spend key. Origin: ${origin}`
         );
@@ -150,7 +162,7 @@ async function handleRpcRequest({
       const viewer = signer.viewer();
       return {
         vk: viewer.vk,
-        vkNonce: viewer.vkNonce,
+        vkNonce: viewer.vkNonce
       };
     }
     case "nocturne_signCanonAddrRegistryEntry": {
@@ -165,8 +177,8 @@ async function handleRpcRequest({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content,
-        },
+          content
+        }
       });
 
       if (!registryConfirmRes) {
@@ -188,7 +200,7 @@ async function handleRpcRequest({
         digest: registryDigest,
         sig: registrySig,
         spendPubkey,
-        vkNonce,
+        vkNonce
       };
     }
     case "nocturne_signOperation": {
@@ -207,8 +219,8 @@ async function handleRpcRequest({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content,
-        },
+          content
+        }
       });
 
       if (!opConfirmRes) {
