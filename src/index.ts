@@ -32,7 +32,6 @@ import {
 // Goerli
 
 const ALLOWED_ORIGINS = [
-  "http://localhost:4001",
   "https://veil.nocturnelabs.xyz",
   "https://goerli.nocturnelabs.xyz",
   "https://app.nocturnelabs.xyz",
