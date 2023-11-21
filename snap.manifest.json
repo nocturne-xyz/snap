@@ -3,7 +3,7 @@
   "description": "Transact privately onchain via the Nocturne protocol.",
   "proposedName": "Nocturne",
   "source": {
-    "shasum": "+Cky/t82zETXWfy49UiObmoC68sgW1jz+/3NXIBhCC4=",
+    "shasum": "di+THbwBabn8fYFyZ6QW7O+On6yTopdD/AY1JeaOBp0=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

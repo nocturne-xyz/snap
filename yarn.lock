@@ -2769,33 +2769,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/client@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "@nocturne-xyz/client@npm:3.1.4"
+"@nocturne-xyz/client@portal:../monorepo/packages/client::locator=%40nocturne-xyz%2Fsnap%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@nocturne-xyz/client@portal:../monorepo/packages/client::locator=%40nocturne-xyz%2Fsnap%40workspace%3A."
   dependencies:
-    "@nocturne-xyz/config": ^1.7.1
+    "@nocturne-xyz/config": "workspace:^"
     "@nocturne-xyz/contracts": ^3.0.0
-    "@nocturne-xyz/core": ^3.1.4
-    "@nocturne-xyz/crypto": ^0.4.1
+    "@nocturne-xyz/core": "workspace:^"
+    "@nocturne-xyz/crypto": "workspace:^"
     async-mutex: ^0.4.0
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
     js-sha256: ^0.9.0
-  checksum: 0cc4f79ee3c8e97e3ea423a95b6f254f3e3af1daaf44dad34bb190d13fe29cca84f8a46dbe2649455a419a256919db33538c045796f5dda146d0b95e68143cea
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@nocturne-xyz/config@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@nocturne-xyz/config@npm:1.7.1"
+"@nocturne-xyz/config@portal:../monorepo/packages/config::locator=%40nocturne-xyz%2Fsnap%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@nocturne-xyz/config@portal:../monorepo/packages/config::locator=%40nocturne-xyz%2Fsnap%40workspace%3A."
   dependencies:
     big-integer: ^1.6.42
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
-  checksum: 998389bcb3154ee5ef3e6cc9dba080d5f9bdbc525b1990dba06382e6f8f18bdd87e868f8169af1cbd8db83605c27ae5dbc6db2997e2ce3c1367725f2b493cc10
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@nocturne-xyz/contracts@npm:^3.0.0":
   version: 3.0.0
@@ -2807,12 +2805,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nocturne-xyz/core@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "@nocturne-xyz/core@npm:3.1.4"
+"@nocturne-xyz/core@portal:../monorepo/packages/core::locator=%40nocturne-xyz%2Fsnap%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@nocturne-xyz/core@portal:../monorepo/packages/core::locator=%40nocturne-xyz%2Fsnap%40workspace%3A."
   dependencies:
     "@nocturne-xyz/contracts": ^3.0.0
-    "@nocturne-xyz/crypto": ^0.4.1
+    "@nocturne-xyz/crypto": "workspace:^"
     "@zk-kit/incremental-merkle-tree": ^1.1.0
     async-mutex: ^0.4.0
     async-retry: ^1.3.3
@@ -2822,22 +2820,20 @@ __metadata:
     js-sha256: ^0.9.0
     sorted-btree: ^1.8.1
     winston: ^3.9.0
-  checksum: 699ad5fc33c65b6ef3d14b614df5e62986b4a28f5e0001a29aa44093a376db91a190de4782babf8c78dd626d1b61baa0508d603bbfc655d42cb322ab3dd3bcbc
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@nocturne-xyz/crypto@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@nocturne-xyz/crypto@npm:0.4.1"
+"@nocturne-xyz/crypto@portal:../monorepo/packages/crypto::locator=%40nocturne-xyz%2Fsnap%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@nocturne-xyz/crypto@portal:../monorepo/packages/crypto::locator=%40nocturne-xyz%2Fsnap%40workspace%3A."
   dependencies:
     "@noble/curves": ^1.2.0
     "@noble/hashes": ^1.3.1
     "@stablelib/chacha20poly1305": ^1.0.1
     bigint-json-serialization: ^1.0.1
     ethers: ^5.7.2
-  checksum: 4925c36681f5d48f61b32c8ae555a838e31046f4a9729a961f5f84ecbc2a98583674b4670318fef8373ed1472a8dce4c337187b4052434e35be9ac5c717c046a
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@nocturne-xyz/snap@workspace:.":
   version: 0.0.0-use.local

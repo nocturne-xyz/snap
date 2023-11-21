@@ -8,13 +8,10 @@ import {
   object,
   optional,
   string,
-  union,
+  union
 } from "superstruct";
 
-export const UndefinedType = define(
-  "Undefined",
-  (value) => value === undefined
-);
+export const NullType = define("Null", (value) => value === null);
 
 const isDataHexString32 = (value: any) =>
   typeof value === "string" && /^0x[0-9a-fA-F]{64}$/.test(value);
@@ -23,54 +20,54 @@ const DataHexString32Type = define(`DataHexString32Type`, isDataHexString32);
 
 export const SetSpendKeyParams = object({
   spendKey: DataHexString32Type,
-  eoaAddress: string(),
+  eoaAddress: string()
 });
 
 export const SignCanonAddrRegistryEntryParams = object({
   entry: object({
     ethAddress: string(),
     compressedCanonAddr: bigint(),
-    perCanonAddrNonce: bigint(),
+    perCanonAddrNonce: bigint()
   }),
   chainId: bigint(),
-  registryAddress: string(),
+  registryAddress: string()
 });
 
 const NetworkInfoType = object({
   chainId: bigint(),
-  tellerContract: string(),
+  tellerContract: string()
 });
 
 const SteathAddressType = object({
   h1X: bigint(),
   h1Y: bigint(),
   h2X: bigint(),
-  h2Y: bigint(),
+  h2Y: bigint()
 });
 
 const CompressedStealthAddressType = object({
   h1: bigint(),
-  h2: bigint(),
+  h2: bigint()
 });
 
 const EncodedAssetType = object({
   encodedAssetAddr: bigint(),
-  encodedAssetId: bigint(),
+  encodedAssetId: bigint()
 });
 
 const TrackedAssetType = object({
   encodedAsset: EncodedAssetType,
-  minRefundValue: bigint(),
+  minRefundValue: bigint()
 });
 
 const ActionType = object({
   contractAddress: string(),
-  encodedFunction: string(),
+  encodedFunction: string()
 });
 
 const CanonAddressType = object({
   x: bigint(),
-  y: bigint(),
+  y: bigint()
 });
 
 const AssetTypeType = enums([0, 1, 2]);
@@ -78,12 +75,12 @@ const AssetTypeType = enums([0, 1, 2]);
 const AssetType = object({
   assetType: AssetTypeType,
   assetAddr: string(),
-  id: bigint(),
+  id: bigint()
 });
 
 const EncryptedNoteType = object({
   ciphertextBytes: array(number()),
-  encapsulatedSecretBytes: array(number()),
+  encapsulatedSecretBytes: array(number())
 });
 
 const NoteType = object({
@@ -91,7 +88,7 @@ const NoteType = object({
   sender: optional(CanonAddressType),
   nonce: bigint(),
   asset: AssetType,
-  value: bigint(),
+  value: bigint()
 });
 
 const IncludedNoteType = object({
@@ -100,12 +97,12 @@ const IncludedNoteType = object({
   nonce: bigint(),
   asset: AssetType,
   value: bigint(),
-  merkleIndex: number(),
+  merkleIndex: number()
 });
 
 const MerkleProofInputType = object({
   path: array(bigint()),
-  siblings: array(array(bigint())),
+  siblings: array(array(bigint()))
 });
 
 const PreSignJoinSplitType = object({
@@ -127,7 +124,7 @@ const PreSignJoinSplitType = object({
   newNoteB: NoteType,
   merkleProofA: MerkleProofInputType,
   merkleProofB: MerkleProofInputType,
-  refundAddr: CompressedStealthAddressType,
+  refundAddr: CompressedStealthAddressType
 });
 
 const PreSignOperationType = object({
@@ -142,14 +139,14 @@ const PreSignOperationType = object({
   deadline: bigint(),
   atomicActions: boolean(),
   joinSplits: array(PreSignJoinSplitType),
-  gasFeeEstimate: bigint(),
+  gasFeeEstimate: bigint()
 });
 
 const ConfidentialPaymentMetadataType = object({
   type: enums(["ConfidentialPayment"]),
   recipient: CanonAddressType,
   asset: AssetType,
-  amount: bigint(),
+  amount: bigint()
 });
 
 const TransferActionMetadataType = object({
@@ -157,20 +154,20 @@ const TransferActionMetadataType = object({
   actionType: enums(["Transfer"]),
   recipientAddress: string(),
   erc20Address: string(),
-  amount: bigint(),
+  amount: bigint()
 });
 
 const WethToWstethActionMetadataType = object({
   type: enums(["Action"]),
   actionType: enums(["Weth To Wsteth"]),
-  amount: bigint(),
+  amount: bigint()
 });
 
 const TransferETHActionMetadataType = object({
   type: enums(["Action"]),
   actionType: enums(["Transfer ETH"]),
   recipientAddress: string(),
-  amount: bigint(),
+  amount: bigint()
 });
 
 const UniswapV3SwapActionMetadataType = object({
@@ -181,26 +178,26 @@ const UniswapV3SwapActionMetadataType = object({
   tokenOut: string(),
   maxSlippageBps: number(),
   exactQuoteWei: bigint(),
-  minimumAmountOutWei: bigint(),
+  minimumAmountOutWei: bigint()
 });
 
 const ActionMetadataType = union([
   TransferActionMetadataType,
   WethToWstethActionMetadataType,
   TransferETHActionMetadataType,
-  UniswapV3SwapActionMetadataType,
+  UniswapV3SwapActionMetadataType
 ]);
 
 const OperationMetadataItemType = union([
   ConfidentialPaymentMetadataType,
-  ActionMetadataType,
+  ActionMetadataType
 ]);
 
 const OperationMetadataType = object({
-  items: array(OperationMetadataItemType),
+  items: array(OperationMetadataItemType)
 });
 
 export const SignOperationParams = object({
   op: PreSignOperationType,
-  metadata: OperationMetadataType,
+  metadata: OperationMetadataType
 });
