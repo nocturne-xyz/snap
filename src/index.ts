@@ -4,14 +4,14 @@ import {
   SnapRpcRequestHandlerArgs,
   assertAllRpcMethodsHandled,
   parseObjectValues,
-  signOperation,
+  signOperation
 } from "@nocturne-xyz/client";
 import { loadNocturneConfigBuiltin } from "@nocturne-xyz/config";
 import {
   AssetTrait,
   NocturneSigner,
   computeCanonAddrRegistryEntryDigest,
-  thunk,
+  thunk
 } from "@nocturne-xyz/core";
 import * as JSON from "bigint-json-serialization";
 import { ethers } from "ethers";
@@ -19,13 +19,13 @@ import { assert } from "superstruct";
 import { SnapKvStore } from "./snapdb";
 import {
   makeSignCanonAddrRegistryEntryContent,
-  makeSignOperationContent,
+  makeSignOperationContent
 } from "./utils/display";
 import {
+  NullType,
   SetSpendKeyParams,
   SignCanonAddrRegistryEntryParams,
-  SignOperationParams,
-  UndefinedType,
+  SignOperationParams
 } from "./validation";
 
 // To build locally, invoke `yarn build:local` from snap directory
@@ -37,7 +37,7 @@ const ALLOWED_ORIGINS = [
   "https://app.nocturnelabs.xyz",
   "https://goerli.nocturne.xyz",
   "https://app.nocturne.xyz",
-  "https://sandbox.nocturne.xyz",
+  "https://sandbox.nocturne.xyz"
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
@@ -107,18 +107,16 @@ export const onRpcRequest: OnRpcRequestHandler = async (args) => {
 
 async function handleRpcRequest({
   origin,
-  request,
+  request
 }: SnapRpcRequestHandlerArgs): Promise<RpcRequestMethod["return"]> {
   //@ts-ignore
-  request.params = request.params
-    ? parseObjectValues(request.params)
-    : undefined;
+  request.params = request.params ? parseObjectValues(request.params) : null;
 
   console.log("Switching on method: ", request.method);
   switch (request.method) {
     case "nocturne_requestSpendKeyEoa": {
-      assert(request.params, UndefinedType);
-      return kvStore.getString(SPEND_KEY_EOA_DB_KEY);
+      assert(request.params, NullType);
+      return (await kvStore.getString(SPEND_KEY_DB_KEY)) ?? null;
     }
     case "nocturne_setSpendKey": {
       assert(request.params, SetSpendKeyParams);
@@ -142,15 +140,15 @@ async function handleRpcRequest({
       );
       await kvStore.putString(SPEND_KEY_EOA_DB_KEY, request.params.eoaAddress);
 
-      return undefined;
+      return null;
     }
     case "nocturne_requestViewingKey": {
-      assert(request.params, UndefinedType);
+      assert(request.params, NullType);
       const signer = await mustGetSigner();
       const viewer = signer.viewer();
       return {
         vk: viewer.vk,
-        vkNonce: viewer.vkNonce,
+        vkNonce: viewer.vkNonce
       };
     }
     case "nocturne_signCanonAddrRegistryEntry": {
@@ -165,8 +163,8 @@ async function handleRpcRequest({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content,
-        },
+          content
+        }
       });
 
       if (!registryConfirmRes) {
@@ -188,7 +186,7 @@ async function handleRpcRequest({
         digest: registryDigest,
         sig: registrySig,
         spendPubkey,
-        vkNonce,
+        vkNonce
       };
     }
     case "nocturne_signOperation": {
@@ -207,8 +205,8 @@ async function handleRpcRequest({
         method: "snap_dialog",
         params: {
           type: "confirmation",
-          content,
-        },
+          content
+        }
       });
 
       if (!opConfirmRes) {
