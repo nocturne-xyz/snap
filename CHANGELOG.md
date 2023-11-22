@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0
+
+### Minor Changes
+
+- 69c3aac: Change undefined params/returns -> null
+
 ## 0.10.2
 
 ### Patch Changes
