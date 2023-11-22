@@ -95,7 +95,6 @@ async function mustGetSigner(): Promise<NocturneSigner> {
  */
 export const onRpcRequest: OnRpcRequestHandler = async (args) => {
   try {
-    console.log("Rpc request received: ", args.request);
     const handledResponse = await handleRpcRequest(
       args as unknown as SnapRpcRequestHandlerArgs
     );
@@ -110,7 +109,6 @@ async function handleRpcRequest({
   origin,
   request
 }: SnapRpcRequestHandlerArgs): Promise<RpcRequestMethod["return"]> {
-  console.log("Handling request: ", request);
   //@ts-ignore
   request.params = request.params ? parseObjectValues(request.params) : null;
 
@@ -118,8 +116,7 @@ async function handleRpcRequest({
   switch (request.method) {
     case "nocturne_requestSpendKeyEoa": {
       assert(request.params, NullType);
-      const spendKey = await kvStore.getString(SPEND_KEY_DB_KEY);
-      return spendKey ? spendKey : null;
+      return (await kvStore.getString(SPEND_KEY_DB_KEY)) ?? null;
     }
     case "nocturne_setSpendKey": {
       assert(request.params, SetSpendKeyParams);
