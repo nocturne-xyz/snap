@@ -37,7 +37,8 @@ const ALLOWED_ORIGINS = [
   "https://app.nocturnelabs.xyz",
   "https://goerli.nocturne.xyz",
   "https://app.nocturne.xyz",
-  "https://sandbox.nocturne.xyz"
+  "https://sandbox.nocturne.xyz",
+  "http://localhost:4001"
 ];
 
 const SPEND_KEY_DB_KEY = "nocturne_spend_key";
